@@ -1,0 +1,17 @@
+FROM node:15-alpine
+
+# Copy entrypoint
+COPY ./docker/entrypoint.sh /entrypoint.sh
+
+# Set workdir
+WORKDIR /app
+COPY ./src/blocks/contracts/postchain.json /contracts/postchain.json
+
+# Make entrypoint executable
+RUN chmod +x /entrypoint.sh
+
+# Set entrypoint
+ENTRYPOINT /entrypoint.sh
+
+# Expose debug
+EXPOSE 9231

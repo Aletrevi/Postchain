@@ -1,0 +1,57 @@
+_format_version: "2.1"
+_transform: true
+
+services:
+- host: blockchain-interactor
+  port: 3001
+  protocol: http
+  routes:
+  - hosts:
+    paths:
+    - /api/blockchain-interactor
+    strip_path: true
+
+- host: post
+  port: 3002
+  protocol: http
+  routes:
+  - hosts:
+    paths:
+    - /api/post
+    strip_path: true
+
+- host: checker
+  port: 3003
+  protocol: http
+  routes:
+  - hosts:
+    paths:
+    - /api/checker
+    strip_path: true
+
+- host: message-broker
+  port: 15672
+  protocol: http
+  routes:
+  - hosts:
+    paths:
+    - /internals/message-broker
+    strip_path: true
+
+- host: web-interface
+  port: 4200
+  protocol: http
+  routes:
+  - hosts:
+    paths:
+    - /
+
+#plugins:
+#- name: oidc
+#  config:
+#    client_id: kong
+#    client_secret: 2fe3e73a-07fa-45db-98cd-3f97a9b37e81
+#    discovery: 
+#    introspection_endpoint: 
+#    logout_path: /api/identities/logout
+

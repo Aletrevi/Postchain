@@ -1,0 +1,16 @@
+FROM node:17-alpine
+
+# Copy entrypoint
+COPY ./docker/entrypoint.sh /entrypoint.sh
+
+# Set workdir
+WORKDIR /app
+
+# Make entrypoint executable
+RUN chmod +x /entrypoint.sh
+
+# Set entrypoint
+ENTRYPOINT /entrypoint.sh
+
+# Expose debug
+EXPOSE 9237

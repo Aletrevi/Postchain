@@ -1,0 +1,19 @@
+FROM kong:alpine
+
+# Using root user to install packages
+USER root
+
+RUN apk add --update-cache \
+git \
+busybox \
+jq \
+curl \
+unzip \
+luarocks \
+&& rm -rf /var/cache/apk/*
+
+# Plugin for OpenID Connect provided by Nokia
+RUN luarocks install kong-oidc
+
+# Restoring default user
+# USER kong
