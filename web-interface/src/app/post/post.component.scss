@@ -1,0 +1,45 @@
+.post-wrapper{
+    border:1px solid darkgray;
+    border-radius: 15px;
+    margin-left: 15vw;
+    margin-top: 8vh;
+    width: 50vw;
+    height: fit-content;
+    background-color: rgb(231, 228, 228);
+    color: rgb(27, 26, 26);
+    img{
+        width: 1vw;
+        height: 1vw;
+    }
+    .post-title{
+       display: flex;
+       flex-direction: row;
+       justify-content: space-between;
+       padding: 1rem;
+       span{font-size: 14pt;}
+    }
+    .post-badge{
+        display: flex;
+        flex-direction: row;
+    }
+    .author{padding-left:1rem;}
+    .content{
+      padding:1.5rem;
+      margin-bottom: 1px solid rgb(27, 26, 26);
+    }
+    .actions{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        padding: 1rem;
+        i{
+            margin-right: 4%;
+        }
+    }
+}
+.verified{
+    color: rgb(15, 58, 43);
+}
+.suspended{
+    color: rgba(202, 174, 15, 0.788);
+}

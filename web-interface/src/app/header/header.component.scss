@@ -1,0 +1,50 @@
+.header{
+    display: flex;
+    position: fixed;
+    top: 0;
+    justify-content: flex-start;
+    min-width: fit-content;
+    min-height: 50px;
+    .logo{
+        min-width: 120px;
+        min-height: 50px;
+        img{width: 13vw;
+            height: 6vh;
+            min-width: 120px;
+            min-height: 50px;
+        }
+        }
+    .searchbar{
+        border: 1px solid lightgray;
+        margin-top: 2vh;
+        width: 60vw;
+        height: 4vh;
+        margin-left: 5vw;
+        border-bottom-left-radius: 8px;
+        border-top-left-radius: 8px;
+        border-color: gray;
+        min-height: 20px;
+       min-width: 5vw;
+        
+    }
+    .searchbutton{
+        border: none;
+        background-color: #FFECBC;
+        margin-top: 2vh;
+        height: 4vh;
+        min-width: fit-content;
+        min-height: 20px;
+        width: 4vw;
+        font-size: 12pt;
+        color: rgb(19, 16, 16);
+        margin-left: 0 !important;
+        i{padding-right: 0.1vw;}
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+    background-color: rgb(15, 58, 43);
+    margin: 0;
+    padding: 0;
+    height: 8vh;
+    width: 100vw;
+}
