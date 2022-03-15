@@ -7,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostComponent implements OnInit {
 
-  constructor() { }
+  constructor() {  }
 
+  sus: Boolean = false;
+ 
+  
   ngOnInit(): void {
   }
 

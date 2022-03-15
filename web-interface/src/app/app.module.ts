@@ -7,6 +7,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 import { PostComponent } from './post/post.component';
 import { PostContainerComponent } from './post-container/post-container.component';
+import { NewPostComponent } from './new-post/new-post.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { PostContainerComponent } from './post-container/post-container.componen
     SidebarComponent,
     HeaderComponent,
     PostComponent,
-    PostContainerComponent
+    PostContainerComponent,
+    NewPostComponent
   ],
   imports: [
     BrowserModule,

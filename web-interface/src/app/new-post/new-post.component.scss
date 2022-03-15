@@ -1,0 +1,44 @@
+.post-wrapper{
+    border:1px solid darkgray;
+    border-radius: 15px;
+    margin-left: 15vw;
+    margin-top: 8vh;
+    width: 50vw;
+    height: fit-content;
+    background-color: rgb(231, 228, 228);
+    color: rgb(27, 26, 26);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    input{
+        margin-top: 0.5rem;
+    }
+    .post-title{
+       border-bottom:1px solid darkgray;
+     
+       span{font-size: 14pt;}
+    }
+    .new-content{
+        padding-top:0.5rem ;
+        display: flex;
+        flex-direction: column;
+        span{
+            font-size: 13pt;
+        }
+    }
+  
+    .author{padding-left:1rem;}
+    .content{
+      padding:1.5rem;
+      margin-bottom: 1px solid rgb(27, 26, 26);
+    }
+    .actions{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        padding: 1rem;
+        i{
+            margin-right: 4%;
+        }
+    }
+}

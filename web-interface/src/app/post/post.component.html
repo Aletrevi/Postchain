@@ -1,19 +1,19 @@
 <div class="post-wrapper">
     <div class="post-title"><span>Title of the post</span>
         <div class="post-badge">
-            <div class="suspended">
-                <img src="../../assets/alert.png">Post suspended!
+            <div class="suspended" *ngIf="sus">
+                <img src="../../assets/alert.png" >Post suspended!
             </div> 
-            <div class="verified">
+            <div class="verified" *ngIf="!sus">
                 <img src="../../assets/verified.jpg">Post verified!
             </div>
         </div>
         
     </div>
-    <div class="author">Alessio Trevisan</div>
+    <div class="new-content">Alessio Trevisan</div>
     <div class="content"><p>
         Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post 
     </p></div>
-    <div class="actions"><button><i class="fa fa-floppy-o" aria-hidden="true"></i>Save
+    <div class="actions"  *ngIf="sus"><button><i class="fa fa-floppy-o" aria-hidden="true"></i>Save
     </button></div>
 </div>
