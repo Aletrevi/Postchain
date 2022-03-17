@@ -14,6 +14,14 @@
     <div class="content"><p>
         Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post Content of the post 
     </p></div>
-    <div class="actions"  *ngIf="sus"><button><i class="fa fa-floppy-o" aria-hidden="true"></i>Save
-    </button></div>
+    <div class="actions">
+        <div class="buttons">
+            <button *ngIf="!sus">
+                <i class="fa fa-floppy-o" aria-hidden="true"></i>Save
+            </button>
+            <button>
+                <i class="fa fa-trash"></i>Delete
+            </button>
+        </div>
+    </div>
 </div>
