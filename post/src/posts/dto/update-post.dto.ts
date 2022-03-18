@@ -1,4 +1,5 @@
-export class CreatePostDto {
+export class UpdatePostDto {
+  readonly _id: string;
   readonly status: string;
   readonly title: string;
   readonly body: string;
