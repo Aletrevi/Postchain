@@ -1,11 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import * as mongoose from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 
-export type PostsDocument = Posts & Document;
+export type PostsDocument = UpdatedPosts & Document;
 
 @Schema()
-export class Posts extends Document {
+export class UpdatedPosts extends Document {
+  @ApiProperty()
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  })
+  _id: string;
+
   @ApiProperty()
   @Prop({
     required: true,
@@ -43,4 +51,4 @@ export class Posts extends Document {
   isPublished: boolean;
 }
 
-export const PostsSchema = SchemaFactory.createForClass(Posts);
+export const PostsSchema = SchemaFactory.createForClass(UpdatedPosts);
