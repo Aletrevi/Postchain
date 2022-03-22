@@ -12,7 +12,7 @@ services:
     strip_path: true
 
 - host: post
-  port: 3002
+  port: 9232
   protocol: http
   routes:
   - hosts:
