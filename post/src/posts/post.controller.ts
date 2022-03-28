@@ -12,7 +12,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { Posts } from './schemas/post.schema';
 
 import { ApiBody, ApiQuery, ApiResponse } from '@nestjs/swagger';
-import { UpdatedPosts } from './schemas/updatedPost.schema';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -21,12 +21,12 @@ export class PostsController {
   @Post()
   @ApiBody({
     required: true,
-    type: Posts,
+    type: CreatePostDto,
   })
   @ApiResponse({
     status: 200,
     description: 'The created post',
-    type: UpdatedPosts,
+    type: Posts,
   })
   async create(@Body() createPostDto: CreatePostDto) {
     await this.postService.create(createPostDto);
@@ -36,7 +36,7 @@ export class PostsController {
   @ApiResponse({
     status: 200,
     description: 'Retrieve all posts',
-    type: [UpdatedPosts],
+    type: [Posts],
   })
   async findAll(): Promise<Posts[]> {
     return this.postService.findAll();
@@ -51,7 +51,7 @@ export class PostsController {
   @ApiResponse({
     status: 200,
     description: 'The found post',
-    type: UpdatedPosts,
+    type: Posts,
   })
   async findOne(@Param('id') id: string): Promise<Posts> {
     return this.postService.findOne(id);
@@ -65,16 +65,16 @@ export class PostsController {
   })
   @ApiBody({
     required: true,
-    type: UpdatedPosts,
+    type: UpdatePostDto,
   })
   @ApiResponse({
     status: 200,
     description: 'The updated post',
-    type: UpdatedPosts,
+    type: Posts,
   })
   async update(
     @Param('id') id: string,
-    @Body() updatePostDto: UpdatedPosts,
+    @Body() updatePostDto: UpdatePostDto,
   ): Promise<Posts> {
     return this.postService.update(id, updatePostDto);
   }

@@ -12,8 +12,7 @@ export class PostsService {
   ) {}
 
   async create(createPostDto: CreatePostDto): Promise<Posts> {
-    const createdPost = await this.postModel.create(createPostDto);
-    return createdPost;
+    return this.postModel.create(createPostDto);
   }
 
   async findAll(): Promise<Posts[]> {

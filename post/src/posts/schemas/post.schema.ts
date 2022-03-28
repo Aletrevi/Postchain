@@ -1,18 +1,23 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import * as mongoose from 'mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 
 export type PostsDocument = Posts & Document;
 
 @Schema()
 export class Posts extends Document {
-  @ApiProperty()
   @Prop({
-    required: true,
+    type: mongoose.Schema.Types.ObjectId
+  })
+  _id: string;
+
+  @Prop({
+    required: false,
+    default: "pending",
   })
   status: string;
 
-  @ApiProperty()
   @Prop({
     required: true,
   })
@@ -32,13 +37,15 @@ export class Posts extends Document {
 
   @ApiProperty()
   @Prop({
-    required: true,
+    required: false,
+    default: false
   })
   isChecked: boolean;
 
   @ApiProperty()
   @Prop({
-    required: true,
+    required: false,
+    default: false,
   })
   isPublished: boolean;
 }
