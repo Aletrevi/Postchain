@@ -10,12 +10,18 @@
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    img{
+        width: 1vw;
+        height: 1vw;
+    }
     input{
         margin-top: 0.5rem;
     }
     .post-title{
        border-bottom:1px solid darkgray;
-     
+       display: flex;
+       flex-direction: row;
+       justify-content: space-between;
        span{font-size: 14pt;}
     }
     .new-content{
@@ -27,7 +33,9 @@
         }
     }
   
-    .author{padding-left:1rem;}
+    .author{
+        padding-left:1rem;
+    }
     .content{
       padding:1.5rem;
       margin-bottom: 1px solid rgb(27, 26, 26);
@@ -39,6 +47,13 @@
         padding: 1rem;
         i{
             margin-right: 4%;
+        }
+        .buttons{
+          display: flex;
+          justify-content: space-around;
+          button{
+              margin-left: 1rem;
+          }
         }
     }
 }
