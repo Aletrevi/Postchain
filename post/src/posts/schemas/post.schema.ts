@@ -8,11 +8,6 @@ export type PostsDocument = Posts & Document;
 @Schema()
 export class Posts extends Document {
   @Prop({
-    type: mongoose.Schema.Types.ObjectId
-  })
-  _id: string;
-
-  @Prop({
     required: false,
     default: "pending",
   })
