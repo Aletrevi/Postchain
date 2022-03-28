@@ -1,17 +1,17 @@
 version: '3.7'
 
 services:
-  message-broker:
-    image: rabbitmq:3.8-management
-    environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=admin
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-      - "15692:15692"
-    networks:
-      - main_network
+ # message-broker:
+  #  image: rabbitmq:3.8-management
+   # environment:
+    #  - RABBITMQ_DEFAULT_USER=admin
+     # - RABBITMQ_DEFAULT_PASS=admin
+    #ports:
+     # - "5672:5672"
+      #- "15672:15672"
+     # - "15692:15692"
+    #networks:
+     # - main_network
 
   # Post microservice
   post:
@@ -29,7 +29,7 @@ services:
       - main_network
       - post_network
     depends_on: 
-      - message-broker
+   #   - message-broker
       - post-data-persistence
 
   post-data-persistence:
@@ -39,9 +39,7 @@ services:
       - MONGODB_REPLICA_SET_MODE=primary
       - MONGODB_ROOT_PASSWORD=password
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
-      - MONGODB_USERNAME=user
-      - MONGODB_PASSWORD=password
-      - MONGODB_DATABASE=postchain
+      - web
     volumes:
       - post-mongo-volume:/bitnami
     ports:
@@ -50,96 +48,96 @@ services:
       - post_network
   
   # Blockchain-interactor microservice
-  blockchain-interactor:
-    build:
-      dockerfile: docker/dockerfile.develop
-      context: ../blockchain-interactor
-    volumes:
-      - ../blockchain-interactor:/app
-    ports:
-      - "9231:9231"
-      - "3001:3001"
-    env_file:
-      - ../blockchain-interactor/.env.development 
-    networks:
-      - main_network
-      - blockchain-interactor_network
-    depends_on: 
-      - message-broker
-      - blockchain-interactor-data-persistence
+ # blockchain-interactor:
+   # build:
+      #dockerfile: docker/dockerfile.develop
+      #context: ../blockchain-interactor
+  #   volumes:
+  #     - ../blockchain-interactor:/app
+  #   ports:
+  #     - "9231:9231"
+  #     - "3001:3001"
+  #   env_file:
+  #     - ../blockchain-interactor/.env.development 
+  #   networks:
+  #     - main_network
+  #     - blockchain-interactor_network
+  #   depends_on: 
+  #     - message-broker
+  #     - blockchain-interactor-data-persistence
 
-  blockchain-interactor-data-persistence:
-    image: bitnami/mongodb:4.2
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=blockchain-interactor-data-persistence
-      - MONGODB_REPLICA_SET_MODE=primary
-      - MONGODB_ROOT_PASSWORD=password
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-      - MONGODB_USERNAME=user
-      - MONGODB_PASSWORD=password
-      - MONGODB_DATABASE=postchain
-    volumes:
-      - blockchain-interactor-mongo-volume:/bitnami
-    ports:
-      - "27017:27017"
-    networks:
-      - blockchain-interactor_network
+  # blockchain-interactor-data-persistence:
+  #   image: bitnami/mongodb:4.2
+  #   environment:
+  #     - MONGODB_ADVERTISED_HOSTNAME=blockchain-interactor-data-persistence
+  #     - MONGODB_REPLICA_SET_MODE=primary
+  #     - MONGODB_ROOT_PASSWORD=password
+  #     - MONGODB_REPLICA_SET_KEY=replicasetkey123
+  #     - MONGODB_USERNAME=user
+  #     - MONGODB_PASSWORD=password
+  #     - MONGODB_DATABASE=postchain
+  #   volumes:
+  #     - blockchain-interactor-mongo-volume:/bitnami
+  #   ports:
+  #     - "27017:27017"
+  #   networks:
+  #     - blockchain-interactor_network
  
-  # checker microservice
-  checker:
-    build:
-      dockerfile: docker/dockerfile.develop
-      context: ../checker
-    volumes:
-      - ../checker:/app
-    ports:
-      - "9234:9234"
-      - "3004:3004"
-    env_file:
-      - ../checker/.env.development 
-    networks:
-      - main_network
-      - checker_network
-    depends_on: 
-      - message-broker
-      - checker-data-persistence
+  # # checker microservice
+  # checker:
+  #   build:
+  #     dockerfile: docker/dockerfile.develop
+  #     context: ../checker
+  #   volumes:
+  #     - ../checker:/app
+  #   ports:
+  #     - "9234:9234"
+  #     - "3004:3004"
+  #   env_file:
+  #     - ../checker/.env.development 
+  #   networks:
+  #     - main_network
+  #     - checker_network
+  #   depends_on: 
+  #     - message-broker
+  #     - checker-data-persistence
  
 
-  checker-data-persistence:
-    image: bitnami/mongodb:4.2
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=checker-data-persistence
-      - MONGODB_REPLICA_SET_MODE=primary
-      - MONGODB_ROOT_PASSWORD=password
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-      - MONGODB_USERNAME=user
-      - MONGODB_PASSWORD=password
-      - MONGODB_DATABASE=postchain
-    volumes:
-      - checker-mongo-volume:/bitnami
-    ports:
-      - "27019:27017"
-    networks:
-      - checker_network
+  # checker-data-persistence:
+  #   image: bitnami/mongodb:4.2
+  #   environment:
+  #     - MONGODB_ADVERTISED_HOSTNAME=checker-data-persistence
+  #     - MONGODB_REPLICA_SET_MODE=primary
+  #     - MONGODB_ROOT_PASSWORD=password
+  #     - MONGODB_REPLICA_SET_KEY=replicasetkey123
+  #     - MONGODB_USERNAME=user
+  #     - MONGODB_PASSWORD=password
+  #     - MONGODB_DATABASE=postchain
+  #   volumes:
+  #     - checker-mongo-volume:/bitnami
+  #   ports:
+  #     - "27019:27017"
+  #   networks:
+  #     - checker_network
 
 
   # Saga orchestrator microservice
-  orchestrator:
-    build:
-      dockerfile: docker/dockerfile.develop
-      context: ../orchestrator
-    volumes:
-      - ../orchestrator:/app
-    ports:
-      - "9235:9235"
-      - "3005:3005"
-    env_file:
-      - ../orchestrator/.env.development 
-    networks:
-      - main_network
+  #orchestrator:
+   # build:
+    #  dockerfile: docker/dockerfile.develop
+     # context: ../orchestrator
+    #volumes:
+     # - ../orchestrator:/app
+    #ports:
+     # - "9235:9235"
+      #- "3005:3005"
+    #env_file:
+     # - ../orchestrator/.env.development 
+   # networks:
+    #  - main_network
 
-    depends_on: 
-      - message-broker
+    #depends_on: 
+     # - message-broker
      
   
   # API Gateway
@@ -180,26 +178,26 @@ services:
 networks:
   main_network:
     name: main_network
-  blockchain-interactor_network:
-    name: blockchain-interactor_network
+ # blockchain-interactor_network:
+  #  name: blockchain-interactor_network
  #not used for now
-  user_network:
-    name: user_network
- #
+ # user_network:
+  #  name: user_network
+ 
   post_network:
     name: post_network
-  checker_network:
-    name: checker_network
+ # checker_network:
+  #  name: checker_network
 
 volumes:
-  blockchain-interactor-mongo-volume:
-    driver: local
+#  blockchain-interactor-mongo-volume:
+  #  driver: local
 #not used for now
-  user-mongo-volume:
-    driver: local
+ # user-mongo-volume:
+  #  driver: local
 #
   post-mongo-volume:
     driver: local
-  checker-mongo-volume:
-    driver: local
+ # checker-mongo-volume:
+  #  driver: local
 

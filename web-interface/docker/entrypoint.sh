@@ -1,2 +1,2 @@
-npm install --no-optional
-npm run start:debug
+npm install
+npm run start
