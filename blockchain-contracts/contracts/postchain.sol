@@ -22,10 +22,16 @@ contract postchain is Ownable {
     mapping(uint256 => Step) public stepIdToStepInfo;
     mapping(string => uint256) public hashToId;
     event StepProofCreated(uint256 _id, string _hash);
+    event StepProofRemoved(uint256 _id, string _hash);
 
     //Modifiers
     modifier noDuplicate(string memory _hashOfJson) {
-        require(hashToId[_hashOfJson] == -1, "duplicate");
+        require(hashToId[_hashOfJson] == 0, "duplicate");
+        _;
+    }
+
+    modifier exists(string memory _hashOfJson) {
+        require(hashToId[_hashOfJson] != 0, "not exisisting");
         _;
     }
 
@@ -44,5 +50,18 @@ contract postchain is Ownable {
         hashToId[_hashOfJson] = stepsCounter;
         emit StepProofCreated(stepsCounter, _hashOfJson);
         return stepsCounter;
+    }
+
+    function removeStepProof(string calldata _hashOfJson)
+        external
+        onlyOwner
+        exists(_hashOfJson)
+        returns (uint256 stepID)
+    {
+        uint256 hashId = hashToId[_hashOfJson];
+        stepIdToStepInfo[hashId] = Step(now, "deleted");
+        delete hashToId[_hashOfJson];
+        emit StepProofRemoved(stepsCounter, _hashOfJson);
+        return hashId;
     }
 }

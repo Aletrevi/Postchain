@@ -1,9 +1,9 @@
 import * as Joi from '@hapi/joi';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BlocksModule } from './blocks/blocks.module';
-import { MinioClientModule } from './minio-client/minio-client.module';
 
 @Module({
   imports: [
@@ -44,9 +44,33 @@ import { MinioClientModule } from './minio-client/minio-client.module';
       })
     }),
     BlocksModule,
-    MinioClientModule
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: 'MATH_SERVICE',
+      useFactory: (configService: ConfigService) => {
+
+        const rabbitmq_user = configService.get('RABBITMQ_USER');
+        const rabbitmq_password = configService.get('RABBITMQ_PASSWORD');
+        const rabbitmq_host = configService.get('RABBITMQ_HOST');
+        const rabbitmq_port = configService.get('RABBITMQ_PORT');
+        const rabbitmq_queue_name = configService.get('RABBITMQ_QUEUE_NAME');
+
+        return ClientProxyFactory.create({
+          transport: Transport.RMQ,
+          options: {
+            urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
+            queue: rabbitmq_queue_name,
+            queueOptions: {
+              durable: false
+            },
+          },
+        });
+      },
+      inject: [ConfigService],
+    }
+  ],
 })
 export class AppModule {}
+

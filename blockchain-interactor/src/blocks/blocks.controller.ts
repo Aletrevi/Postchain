@@ -1,5 +1,5 @@
-import { Controller, Get, Logger, Param, Query } from '@nestjs/common';
-import { EventPattern, Payload } from '@nestjs/microservices';
+import { Controller, Get, Inject, Logger, Param, Query } from '@nestjs/common';
+import { ClientProxy, EventPattern, Payload } from '@nestjs/microservices';
 import { ApiParam, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { Observable } from 'rxjs';
 import { PaginationQueryDto } from 'src/dto/paginationQuery.dto';
@@ -9,7 +9,10 @@ import { Block } from './schemas/block.schema';
 
 @Controller('blocks')
 export class BlocksController {
-  constructor(private readonly blocksService: BlocksService) {}
+  constructor(
+    private readonly blocksService: BlocksService,
+    @Inject('MATH_SERVICE') private client: ClientProxy,
+  ) {}
 
   @Get()
   @ApiQuery({
@@ -83,6 +86,11 @@ export class BlocksController {
 
   @EventPattern('createBlock')
   createEvent(@Payload() blockBody: any): Observable<Block> {
-    return this.blocksService.create(blockBody);
+    return this.client.emit<Block>('post_created', this.blocksService.create(blockBody));
+  }
+  //Remove block: return the id of the post and a boolean for isPublished
+  @EventPattern('removeBlock')
+  removeEvent(@Payload() blockBody: any): Observable<Block> {
+    return this.client.emit<Block>('post_removed', this.blocksService.remove(blockBody));
   }
 }
