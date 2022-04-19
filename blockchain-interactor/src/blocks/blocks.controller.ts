@@ -3,7 +3,7 @@ import { ClientProxy, EventPattern, Payload } from '@nestjs/microservices';
 import { ApiParam, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { Observable } from 'rxjs';
 import { PaginationQueryDto } from 'src/dto/paginationQuery.dto';
-import { BlocksService } from './blocks.service';
+import { BlocksService} from './blocks.service';
 import { FindOneParams } from './params/find-one.params';
 import { Block } from './schemas/block.schema';
 
@@ -11,7 +11,7 @@ import { Block } from './schemas/block.schema';
 export class BlocksController {
   constructor(
     private readonly blocksService: BlocksService,
-    @Inject('MATH_SERVICE') private client: ClientProxy,
+    @Inject('RABBIT_EVENTS') private client: ClientProxy,
   ) {}
 
   @Get()

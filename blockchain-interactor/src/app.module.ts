@@ -28,12 +28,6 @@ import { BlocksModule } from './blocks/blocks.module';
         RABBITMQ_PASSWORD: Joi.string().required(),
         RABBITMQ_HOST: Joi.string().required(),
         RABBITMQ_PORT: Joi.number().required(),
-        RABBITMQ_QUEUE_NAME: Joi.string().required(),
-        MINIO_ENDPOINT: Joi.string().required(),
-        MINIO_PORT: Joi.number().required(),
-        MINIO_ACCESS_KEY: Joi.string().required(),
-        MINIO_SECRET_KEY: Joi.string().required(),
-        MINIO_BUCKET_NAME: Joi.string().required(),
       })
     }),
     MongooseModule.forRootAsync({
@@ -48,14 +42,14 @@ import { BlocksModule } from './blocks/blocks.module';
   controllers: [],
   providers: [
     {
-      provide: 'MATH_SERVICE',
+      provide: 'RABBIT_EVENTS',
       useFactory: (configService: ConfigService) => {
 
         const rabbitmq_user = configService.get('RABBITMQ_USER');
         const rabbitmq_password = configService.get('RABBITMQ_PASSWORD');
         const rabbitmq_host = configService.get('RABBITMQ_HOST');
         const rabbitmq_port = configService.get('RABBITMQ_PORT');
-        const rabbitmq_queue_name = configService.get('RABBITMQ_QUEUE_NAME');
+        const rabbitmq_queue_name = configService.get('RABBITMQ_BC_INTERACTOR_QUEUE_NAME');
 
         return ClientProxyFactory.create({
           transport: Transport.RMQ,
@@ -69,7 +63,30 @@ import { BlocksModule } from './blocks/blocks.module';
         });
       },
       inject: [ConfigService],
-    }
+    },
+    {
+      provide: 'RABBIT_TRIGGERS',
+      useFactory: (configService: ConfigService) => {
+
+        const rabbitmq_user = configService.get('RABBITMQ_USER');
+        const rabbitmq_password = configService.get('RABBITMQ_PASSWORD');
+        const rabbitmq_host = configService.get('RABBITMQ_HOST');
+        const rabbitmq_port = configService.get('RABBITMQ_PORT');
+        const rabbitmq_queue_name = configService.get('RABBITMQ_BC_INTERACTIR_TRIGGERS_QUEUE_NAME');
+
+        return ClientProxyFactory.create({
+          transport: Transport.RMQ,
+          options: {
+            urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
+            queue: rabbitmq_queue_name,
+            queueOptions: {
+              durable: false
+            },
+          },
+        });
+      },
+      inject: [ConfigService],
+    },
   ],
 })
 export class AppModule {}
