@@ -57,6 +57,21 @@ export class PostsController {
     return this.postService.findOne(id);
   }
 
+  @Get(':author')
+  @ApiQuery({
+    name: 'author',
+    required: true,
+    type: String,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The found post',
+    type: [Posts],
+  })
+  async findByAuthor(@Param('author') author: string): Promise<Posts[]> {
+    return this.postService.findByAuthor(author);
+  }
+
   @Put(':id')
   @ApiQuery({
     name: 'id',

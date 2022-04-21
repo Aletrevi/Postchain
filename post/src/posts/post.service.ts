@@ -23,6 +23,10 @@ export class PostsService {
     return this.postModel.findOne({ _id: id }).exec();
   }
 
+  async findByAuthor(author: string): Promise<Posts[]> {
+    return this.postModel.find({ author: author }).exec();
+  }
+
   async update(id: string, updatePostDto: UpdatePostDto): Promise<Posts> {
     const updatedPost = await this.postModel
       .findByIdAndUpdate(id, updatePostDto)
