@@ -12,7 +12,13 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { Posts } from './schemas/post.schema';
 
 import { ApiBody, ApiQuery, ApiResponse } from '@nestjs/swagger';
+<<<<<<< HEAD
 import { UpdatePostDto } from './dto/update-post.dto';
+=======
+import { UpdatedPosts } from './schemas/updatedPost.schema';
+import { EventPattern, Payload } from '@nestjs/microservices';
+import { combineLatest, Observable } from 'rxjs';
+>>>>>>> frontend
 
 @Controller('posts')
 export class PostsController {
@@ -83,4 +89,36 @@ export class PostsController {
   async delete(@Param('id') id: string) {
     return this.postService.delete(id);
   }
+  
+  // @EventPattern('post_created')
+  // postCreatedEvent(@Payload() body: any): Observable<any> {
+  //   let checker = this.checker_service_triggers_client.emit<any>('verify_post', body);
+  //   let bc = this.bc_interactor_triggers_client.emit<any>('create_block', body);
+  //   return combineLatest({ checker: checker, bc: bc});
+  // }
+
+  // @EventPattern('post_verified')
+  // postVerifiedEvent(@Payload() body: any): Observable<any> {
+  //   return this.post_service_triggers_client.emit<any>('post_verified', body); // TODO: modificare 
+  // }
+  
+  // @EventPattern('post_rejected')
+  // postRejectedEvent(@Payload() body: any): Observable<any> {
+  //   return this.post_service_triggers_client.emit<any>('post_rejeceted', body); // TODO: modificare 
+  // }
+
+  // @EventPattern('block_published')
+  // blockPublishedEvent(@Payload() body: any): Observable<any>{
+  //   return this.bc_interactor_triggers_client.emit<any>('block_published', body); // TODO: modificare 
+  // }
+
+  // @EventPattern('block_not_published')
+  // blockNotPublishedEvent(@Payload() body: any): Observable<any>{
+  //   return this.bc_interactor_triggers_client.emit<any>('block_not_published', body); // TODO: modificare 
+  // }
+  // @EventPattern('post_reformed')
+  // postReformedEvent(@Payload() body: any): Observable<any>{
+  //   return this.post_service_triggers_client.emit<any>('post_reformed', body); // TODO: modificare 
+  // }
+
 }

@@ -1,9 +1,9 @@
 import * as Joi from '@hapi/joi';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BlocksModule } from './blocks/blocks.module';
-import { MinioClientModule } from './minio-client/minio-client.module';
 
 @Module({
   imports: [
@@ -28,12 +28,6 @@ import { MinioClientModule } from './minio-client/minio-client.module';
         RABBITMQ_PASSWORD: Joi.string().required(),
         RABBITMQ_HOST: Joi.string().required(),
         RABBITMQ_PORT: Joi.number().required(),
-        RABBITMQ_QUEUE_NAME: Joi.string().required(),
-        MINIO_ENDPOINT: Joi.string().required(),
-        MINIO_PORT: Joi.number().required(),
-        MINIO_ACCESS_KEY: Joi.string().required(),
-        MINIO_SECRET_KEY: Joi.string().required(),
-        MINIO_BUCKET_NAME: Joi.string().required(),
       })
     }),
     MongooseModule.forRootAsync({
@@ -44,9 +38,8 @@ import { MinioClientModule } from './minio-client/minio-client.module';
       })
     }),
     BlocksModule,
-    MinioClientModule
   ],
   controllers: [],
-  providers: [],
 })
 export class AppModule {}
+

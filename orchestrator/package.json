@@ -1,5 +1,5 @@
 {
-  "name": "blockchain-interactor",
+  "name": "orchestrator",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -10,17 +10,15 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest build --webpack --webpackPath webpack-hmr.config.js",
-    "start:debug": "nest start --debug 0.0.0.0:9229 --watch",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix -o reports/eslint.json -f json",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
-    "serve-doc": "npx @compodoc/compodoc -p tsconfig.json -s",
-    "generate-doc": "npx @compodoc/compodoc -p tsconfig.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
@@ -37,7 +35,6 @@
     "@types/mongodb": "^3.6.3",
     "amqp-connection-manager": "^3.2.1",
     "amqplib": "^0.6.0",
-    "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.13",
@@ -83,10 +80,13 @@
       "ts"
     ],
     "rootDir": "src",
-    "testRegex": ".spec.ts$",
+    "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }

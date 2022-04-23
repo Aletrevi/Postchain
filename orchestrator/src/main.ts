@@ -7,7 +7,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  
   // Get configuration from Configuration Service
   const configService = app.get(ConfigService);
   const rabbitmq_user = configService.get('RABBITMQ_USER');
@@ -21,6 +21,7 @@ async function bootstrap() {
     transport: Transport.RMQ,
     options: {
       urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
+      queue: rabbitmq_queue_name,
       queueOptions: {
         durable: true
       },
@@ -29,14 +30,13 @@ async function bootstrap() {
 
   // Setup OPENAPI 
   const config = new DocumentBuilder()
-    .setTitle('Blockchain interactor')
-    .setDescription('The postchain Blockchain-interactor microservice API description')
-    .setVersion('1.0')
-    .addServer('/api/blockchain-interactor')
-    .build();
+  .setTitle('Blockchain interactor')
+  .setDescription('The postchain Blockchain-interactor microservice API description')
+  .setVersion('1.0')
+  .addServer('/api/blockchain-interactor')
+  .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
-
 
   // Validate request's data with DTO
   // TODO: validate id with custom validator https://stackoverflow.com/questions/49709429/decorator-to-return-a-404-in-a-nest-controller
