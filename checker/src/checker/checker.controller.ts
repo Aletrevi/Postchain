@@ -7,16 +7,27 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { ApiBody, ApiResponse } from '@nestjs/swagger';
 import { CheckerService } from './checker.service';
 import { CreateCheckerDto } from './dto/create-checker.dto';
 import { UpdateCheckerDto } from './dto/update-checker.dto';
+import { Posts } from './schemas/checker.schema';
 
 @Controller('checker')
 export class CheckerController {
   constructor(private readonly checkerService: CheckerService) {}
 
-  @Post()
-  checkPost(@Body() createCheckerDto: CreateCheckerDto) {
+  @Get()
+  @ApiBody({
+    required: true,
+    type: CreateCheckerDto,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Checked status',
+    type: Posts,
+  })
+  async checkPost(@Body() createCheckerDto: CreateCheckerDto) {
     return this.checkerService.checkPost(createCheckerDto);
   }
 

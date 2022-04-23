@@ -7,7 +7,6 @@ export type PostsDocument = Posts & Document;
 
 @Schema()
 export class Posts extends Document {
-  @ApiProperty()
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     required: true,

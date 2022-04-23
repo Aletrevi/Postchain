@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateCheckerDto } from './dto/create-checker.dto';
 import { UpdateCheckerDto } from './dto/update-checker.dto';
-import { Posts, PostsDocument } from './entities/checker.entity';
+import { Posts, PostsDocument } from './schemas/checker.schema';
 import axios from 'axios';
 
 @Injectable()
