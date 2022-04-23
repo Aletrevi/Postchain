@@ -24,7 +24,7 @@ services:
       - "9232:9232"
       - "3002:3002"
     env_file:
-      - ../post/.env
+      - ../post/.env.development
     networks:
       - main_network
       - post_network
@@ -57,7 +57,7 @@ services:
       - "9231:9231"
       - "3001:3001"
     env_file:
-      - ../blockchain-interactor/.env
+      - ../blockchain-interactor/.env.development
     networks:
       - main_network
       - blockchain-interactor_network
@@ -93,7 +93,7 @@ services:
   #     - "9234:9234"
   #     - "3004:3004"
   #   env_file:
-  #     - ../checker/.env 
+  #     - ../checker/.env.development 
   #   networks:
   #     - main_network
   #     - checker_network
@@ -131,7 +131,7 @@ services:
       - "9235:9235"
       - "3005:3005"
     env_file:
-      - ../orchestrator/.env 
+      - ../orchestrator/.env.development
     networks:
       - main_network
     depends_on:

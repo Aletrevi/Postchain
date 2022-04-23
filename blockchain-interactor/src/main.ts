@@ -21,7 +21,6 @@ async function bootstrap() {
     transport: Transport.RMQ,
     options: {
       urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
-      queue: rabbitmq_queue_name,
       queueOptions: {
         durable: true
       },

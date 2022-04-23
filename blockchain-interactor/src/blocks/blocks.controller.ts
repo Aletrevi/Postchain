@@ -11,7 +11,7 @@ import { Block } from './schemas/block.schema';
 export class BlocksController {
   constructor(
     private readonly blocksService: BlocksService,
-    @Inject('RABBIT_EVENTS') private client: ClientProxy,
+    @Inject('RABBIT_TRIGGERS') private client: ClientProxy,
   ) {}
 
   @Get()
