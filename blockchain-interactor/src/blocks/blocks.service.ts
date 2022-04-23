@@ -1,14 +1,11 @@
-import { date } from '@hapi/joi';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { combineLatest, from, Observable } from 'rxjs';
+import { combineLatest, from, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import SHA3 from 'sha3';
 import { PaginationQueryDto } from 'src/dto/paginationQuery.dto';
-import { BufferedFile } from 'src/minio-client/models/file.model';
-import { MinioClientService } from 'src/minio-client/services/minio-client.service';
 import Web3 from 'web3';
 import { Block } from './schemas/block.schema';
 
@@ -21,7 +18,7 @@ import { Block } from './schemas/block.schema';
 @Injectable()
 export class BlocksService {
   // TODO: Investigate why json module are not automatically included in dist
-  private readonly myContract =   ('/contracts/postchain.json');
+  private readonly myContract = require('/contracts/postchain.json');
   
   private readonly wallet_privateKey: string;
   private readonly wallet_address: string;
@@ -38,7 +35,6 @@ export class BlocksService {
   constructor(
     @InjectModel(Block.name) private readonly blockModel: Model<Block>,
     private readonly configService: ConfigService,
-    private readonly minioClientService: MinioClientService,
   ) {
 
     // Getting params from config service
@@ -65,6 +61,23 @@ export class BlocksService {
     ).subscribe();
   }
 
+  remove(blockBody: any): Observable<any> {
+    
+    Logger.debug(`Removing block with body ${JSON.stringify(blockBody)}`);
+
+    // Generating sha3 hash of body
+    const bodyHash = new SHA3().update(JSON.stringify(blockBody)).digest('hex');
+
+    // Saving to blockchain
+    const blockchainSave = this.sendDeleteTransaction(bodyHash);
+
+    // Removing from db
+    const dbDelete = from(null); // TODO: Delete document
+
+    // TODO: Update return type ????
+    return combineLatest([blockchainSave, dbDelete])
+  }
+
   /**
    * Creates a new record on database
    *
@@ -80,25 +93,25 @@ export class BlocksService {
 
     // Check if a block with the same body already exists
     return this.isDuplicate(bodyHash).pipe(
-      map(() => {
-        // Creating bufferedFile using blockBody
-        return {
-          // fieldname: '',
-          originalname: Date.now().toString(),
-          encoding: 'utf-8',
-          mimetype: 'application/json',
-          size: 12345,
-          // buffer: Buffer.from(blockBody)
-          buffer: JSON.stringify(blockBody),
-        } as BufferedFile;
-      }),
-      switchMap((fileBuffer: BufferedFile) => {
-        return from(this.minioClientService.upload(fileBuffer));
-      }),
-      switchMap(({ url }) => {
+      // map(() => {
+      //   // Creating bufferedFile using blockBody
+      //   return {
+      //     // fieldname: '',
+      //     originalname: Date.now().toString(),
+      //     encoding: 'utf-8',
+      //     mimetype: 'application/json',
+      //     size: 12345,
+      //     // buffer: Buffer.from(blockBody)
+      //     buffer: JSON.stringify(blockBody),
+      //   } as BufferedFile;
+      // }),
+      // switchMap((fileBuffer: BufferedFile) => {
+      //   return from(this.minioClientService.upload(fileBuffer));
+      // }),
+      switchMap(() => {
         // Generating object to store in db
         const newBlock = new this.blockModel({
-          body: url,
+          body: JSON.stringify(blockBody),
           hash: bodyHash,
         });
 
@@ -262,6 +275,57 @@ export class BlocksService {
   private buildTransaction(hashOfJson: string): Observable<any> {
     // Define which method to call and its' parameters
     const transactionMethod = this.contract.methods.createStepProof(hashOfJson);
+    const data = transactionMethod.encodeABI();
+
+    // Get parameters needed in order to send transaction
+    const gasObs = from(transactionMethod.estimateGas({ from: this.wallet_address }));
+    const gasPriceObs = from(this.web3.eth.getGasPrice());
+    const nonceObs = from(this.web3.eth.getTransactionCount(this.wallet_address));
+
+    // Build transaction object with all
+    return combineLatest([gasObs, gasPriceObs, nonceObs]).pipe(
+      map(([gas, gasPrice, nonce]) => {
+        return {
+          from: this.wallet_address,
+          to: this.contract.options.address,
+          data,
+          gas,
+          gasPrice,
+          nonce
+        };
+      }),
+    );
+  }
+
+  /**
+   *
+   *
+   * @private
+   * @return {*}  {Observable<void>}
+   * @memberof BlocksService
+   */
+   private sendDeleteTransaction(hashOfJson): Observable<any> {
+    // Build transaction object
+    return this.buildDeleteTransaction(hashOfJson).pipe(
+      
+      // Actually calling contract's method to generate step proof
+      switchMap((transaction) => {
+        return from(this.web3.eth.sendTransaction(transaction));
+      }),
+    );
+  }
+
+  /**
+   * 
+   *
+   * @private
+   * @param {string} hashOfJson
+   * @return {*}  {Observable<any>}
+   * @memberof BlocksService
+   */
+   private buildDeleteTransaction(hashOfJson: string): Observable<any> {
+    // Define which method to call and its' parameters
+    const transactionMethod = this.contract.methods.removeStepProof(hashOfJson);
     const data = transactionMethod.encodeABI();
 
     // Get parameters needed in order to send transaction
