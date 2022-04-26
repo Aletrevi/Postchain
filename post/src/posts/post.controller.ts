@@ -94,8 +94,8 @@ export class PostsController {
   
 
   @EventPattern('post_verified')
-  postVerifiedEvent(@Payload() body: any) {
-    return this.postService.manageVerification(body);
+  postaApprovedEvent(@Payload() body: any): Promise<Posts> {
+    return this.postService.manageApproval(body);
   } 
   
   @EventPattern('post_rejected')

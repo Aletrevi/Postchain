@@ -47,10 +47,23 @@ export class PostsService {
 
   //TODO:implement a method s.t. if isValidated = true and isPublished = true sets status validated 
 
-  async manageVerification(id:string): Promise<void> {
-    //TODO: set isValidated = true
+  async manageApproval(id:string): Promise<Posts> {
+      let post = await this.postModel.findById(id).exec()
+      let updateQuery = {}
+      if(post.isPublished)
+        { 
+          updateQuery = {status:'approved' ,isChecked:true, checkPassed: true}
+          
+        }
+        else {
+          updateQuery = {isChecked:true, checkPassed: true}
+        }
+      
+      return this.postModel.findByIdAndUpdate(id,updateQuery ).exec()
   }
-  async manageRejection(id:string): Promise<void> {
+  async manageRejection(id:string): Promise<Posts> {
+          return this.postModel.findByIdAndUpdate(id,{status:'rejected', isChecked: true, checkPassed: false}).exec()
+
     //TODO: undo blockchain publication, set status as rejected, set isPublished= false, set isChecked = true
   }
   async managePublication(id:string): Promise<void> {
@@ -62,4 +75,9 @@ export class PostsService {
   async manageReformed(id:string): Promise<void> {
     //TODO: reset the post
   }
+  async c (id:string): Promise<Posts> {
+      let post = await this.postModel.findById(id).exec()
+      if (post.status != 'Rejected')
+      return this.postModel.findByIdAndUpdate(id, {status:'Approved'}).exec()
+}
 }
