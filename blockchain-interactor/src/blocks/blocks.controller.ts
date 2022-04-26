@@ -11,7 +11,8 @@ import { Block } from './schemas/block.schema';
 export class BlocksController {
   constructor(
     private readonly blocksService: BlocksService,
-    @Inject('RABBIT_TRIGGERS') private client: ClientProxy,
+    @Inject('RABBIT_TRIGGERS') private triggersClient: ClientProxy,
+    @Inject('RABBIT_EVENTS') private eventsClient: ClientProxy,
   ) {}
 
   @Get()
@@ -86,11 +87,11 @@ export class BlocksController {
 
   @EventPattern('createBlock')
   createEvent(@Payload() blockBody: any): Observable<Block> {
-    return this.client.emit<Block>('post_created', this.blocksService.create(blockBody));
+    return this.eventsClient.emit<Block>('post_created', this.blocksService.create(blockBody));
   }
   //Remove block: return the id of the post and a boolean for isPublished
   @EventPattern('removeBlock')
   removeEvent(@Payload() blockBody: any): Observable<Block> {
-    return this.client.emit<Block>('post_removed', this.blocksService.remove(blockBody));
+    return this.eventsClient.emit<Block>('post_removed', this.blocksService.remove(blockBody));
   }
 }
