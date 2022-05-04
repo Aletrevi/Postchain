@@ -12,13 +12,9 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { Posts } from './schemas/post.schema';
 
 import { ApiBody, ApiQuery, ApiResponse } from '@nestjs/swagger';
-<<<<<<< HEAD
 import { UpdatePostDto } from './dto/update-post.dto';
-=======
-import { UpdatedPosts } from './schemas/updatedPost.schema';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { combineLatest, Observable } from 'rxjs';
->>>>>>> frontend
 
 @Controller('posts')
 export class PostsController {
@@ -89,7 +85,7 @@ export class PostsController {
   async delete(@Param('id') id: string) {
     return this.postService.delete(id);
   }
-  
+
   // @EventPattern('post_created')
   // postCreatedEvent(@Payload() body: any): Observable<any> {
   //   let checker = this.checker_service_triggers_client.emit<any>('verify_post', body);
@@ -101,7 +97,7 @@ export class PostsController {
   // postVerifiedEvent(@Payload() body: any): Observable<any> {
   //   return this.post_service_triggers_client.emit<any>('post_verified', body); // TODO: modificare 
   // }
-  
+
   // @EventPattern('post_rejected')
   // postRejectedEvent(@Payload() body: any): Observable<any> {
   //   return this.post_service_triggers_client.emit<any>('post_rejeceted', body); // TODO: modificare 
