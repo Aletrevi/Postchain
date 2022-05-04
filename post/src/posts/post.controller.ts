@@ -37,7 +37,8 @@ export class PostsController {
     type: Posts,
   })
   async create(@Body() createPostDto: CreatePostDto) {
-    await this.postService.create(createPostDto);
+    let body = await this.postService.create(createPostDto);
+   
   }
 
   @Get()
@@ -111,10 +112,5 @@ export class PostsController {
   blockNotPublishedEvent(@Payload() body: any){
     return this.postService.managePublicationFailed( body); 
   }
-  @EventPattern('post_reformed')
-  postReformedEvent(@Payload() body: any) {
-  
-  return this.postService.manageReformed(body);
-   }
 
 }
