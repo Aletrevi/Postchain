@@ -66,18 +66,33 @@ export class PostsService {
 
     //TODO: undo blockchain publication, set status as rejected, set isPublished= false, set isChecked = true
   }
-  async managePublication(id:string): Promise<void> {
+  async managePublication(id:string): Promise<Posts> {
+
+    let post = await this.postModel.findById(id).exec()
+    let updateQuery = {}
+    if(post.isChecked && post.checkPassed)
+      { 
+        updateQuery = {status:'approved' ,isPublished:true}
+        
+      }
+      else {
+        updateQuery = {isPublished: true}
+      }
+    
+    return this.postModel.findByIdAndUpdate(id,updateQuery).exec()
+
     //TODO: set isPublished = true
   }
-  async managePublicationFailed(id:string): Promise<void> {
+  async managePublicationFailed(id:string): Promise<Posts> {
+    return this.postModel.findByIdAndUpdate(id,{status:'rejected', isPublished: false}).exec()
     //TODO: set isPublished = false, set  status as rejected
   }
-  async manageReformed(id:string): Promise<void> {
+  async manageReformed(id:string): Promise<Posts> {
+    let post = await this.postModel.findById(id).exec()
+    let updateQuery = {status:'pending', isChecked:false, isPublished:false, checkPassed: false}
+    return this.postModel.findByIdAndUpdate(id,updateQuery)
+    
     //TODO: reset the post
   }
-  async c (id:string): Promise<Posts> {
-      let post = await this.postModel.findById(id).exec()
-      if (post.status != 'Rejected')
-      return this.postModel.findByIdAndUpdate(id, {status:'Approved'}).exec()
-}
+ 
 }

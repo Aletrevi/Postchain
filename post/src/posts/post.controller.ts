@@ -92,7 +92,6 @@ export class PostsController {
     return this.postService.delete(id);
   }
   
-
   @EventPattern('post_verified')
   postaApprovedEvent(@Payload() body: any): Promise<Posts> {
     return this.postService.manageApproval(body);
@@ -100,21 +99,22 @@ export class PostsController {
   
   @EventPattern('post_rejected')
   postRejectedEvent(@Payload() body: any){
-    return this.postService.manageRejection(body); // TODO: modificare 
+    return this.postService.manageRejection(body); 
   }
 
   @EventPattern('block_published')
   blockPublishedEvent(@Payload() body: any){
-    return this.postService.managePublication(body); // TODO: modificare 
+    return this.postService.managePublication(body);
   }
 
   @EventPattern('block_not_published')
   blockNotPublishedEvent(@Payload() body: any){
-    return this.postService.managePublicationFailed( body); // TODO: modificare 
+    return this.postService.managePublicationFailed( body); 
   }
   @EventPattern('post_reformed')
-  postReformedEvent(@Payload() body: any): Observable<any>{
-  return this.postService.manageReformed(body); // TODO: modificare 
+  postReformedEvent(@Payload() body: any) {
+  
+  return this.postService.manageReformed(body);
    }
 
 }
