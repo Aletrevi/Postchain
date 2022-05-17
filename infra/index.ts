@@ -67,10 +67,33 @@ const clusterProvider = new k8s.Provider(name, {
 
 let ingressIntance = ingressController.create(clusterProvider)
 
+let postService = service.create(
+  clusterProvider,
+  "post",
+  9232, 
+  "aletrevi/post:0.1"
+)
 
-let port = 9090
-let image = "docker-image-url"
-let fooService = service.create(clusterProvider, name, port, image)
+let checkerService = service.create(
+  clusterProvider,
+  "checker",
+  9233, 
+  "aletrevi/checker:0.1"
+)
+
+let orchestratorService = service.create(
+  clusterProvider,
+  "orchestrator",
+  9231, 
+  "aletrevi/orchestrator:0.1"
+)
+let blockchainInteractorService = service.create(
+  clusterProvider,
+  "blockchain-interactor",
+  9231, 
+  "aletrevi/blockchain-interactor:0.1"
+)
+
 
 
 // // Create a Kubernetes Namespace
@@ -136,3 +159,7 @@ let fooService = service.create(clusterProvider, name, port, image)
 // export const serviceName = service.metadata.apply(m => m.name);
 // export const servicePublicIP = service.status.apply(s => s.loadBalancer.ingress[0].ip)
 
+
+
+// docker build -f docker/dockerfile.develop . -t aletrevi/<nome>:<versione> -t <nome>:<versione>
+// docker push aletrevi/<nome>:<versione>
