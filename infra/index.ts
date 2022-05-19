@@ -73,7 +73,7 @@ let postService = service.create(
   clusterProvider,
   "post",
   9232,
-  "aletrevi/post:0.3"
+  "aletrevi/post:0.4"
 )
 
 let checkerService = service.create(
