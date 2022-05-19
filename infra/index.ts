@@ -3,24 +3,25 @@ import * as pulumi from "@pulumi/pulumi";
 import * as gcp from "@pulumi/gcp";
 import * as ingressController from "./ingressController";
 import * as service from "./service";
+import * as prometheusOperator from "./prometheusOperator";
 
 const name = "helloworld";
 
 // Create a GKE cluster
 const engineVersion = gcp.container.getEngineVersions().then(v => v.latestMasterVersion);
 const cluster = new gcp.container.Cluster(name, {
-    initialNodeCount: 2,
-    minMasterVersion: engineVersion,
-    nodeVersion: engineVersion,
-    nodeConfig: {
-        machineType: "n1-standard-1",
-        oauthScopes: [
-            "https://www.googleapis.com/auth/compute",
-            "https://www.googleapis.com/auth/devstorage.read_only",
-            "https://www.googleapis.com/auth/logging.write",
-            "https://www.googleapis.com/auth/monitoring"
-        ],
-    },
+  initialNodeCount: 2,
+  minMasterVersion: engineVersion,
+  nodeVersion: engineVersion,
+  nodeConfig: {
+    machineType: "n1-standard-1",
+    oauthScopes: [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring"
+    ],
+  },
 });
 
 // Export the Cluster name
@@ -30,10 +31,10 @@ export const clusterName = cluster.name;
 // because of the way GKE requires gcloud to be in the picture for cluster
 // authentication (rather than using the client cert/key directly).
 export const kubeconfig = pulumi.
-    all([ cluster.name, cluster.endpoint, cluster.masterAuth ]).
-    apply(([ name, endpoint, masterAuth ]) => {
-        const context = `${gcp.config.project}_${gcp.config.zone}_${name}`;
-        return `apiVersion: v1
+  all([cluster.name, cluster.endpoint, cluster.masterAuth]).
+  apply(([name, endpoint, masterAuth]) => {
+    const context = `${gcp.config.project}_${gcp.config.zone}_${name}`;
+    return `apiVersion: v1
 clusters:
 - cluster:
     certificate-authority-data: ${masterAuth.clusterCaCertificate}
@@ -58,39 +59,40 @@ users:
         token-key: '{.credential.access_token}'
       name: gcp
 `;
-    });
+  });
 
 // Create a Kubernetes provider instance that uses our cluster from above.
 const clusterProvider = new k8s.Provider(name, {
-    kubeconfig: kubeconfig,
+  kubeconfig: kubeconfig,
 });
 
 let ingressIntance = ingressController.create(clusterProvider)
+let prometheusOperatorInstance = prometheusOperator.create(clusterProvider)
 
 let postService = service.create(
   clusterProvider,
   "post",
-  9232, 
+  9232,
   "aletrevi/post:0.1"
 )
 
 let checkerService = service.create(
   clusterProvider,
   "checker",
-  9233, 
+  9233,
   "aletrevi/checker:0.1"
 )
 
 let orchestratorService = service.create(
   clusterProvider,
   "orchestrator",
-  9231, 
+  9231,
   "aletrevi/orchestrator:0.1"
 )
 let blockchainInteractorService = service.create(
   clusterProvider,
   "blockchain-interactor",
-  9231, 
+  9231,
   "aletrevi/blockchain-interactor:0.1"
 )
 

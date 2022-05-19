@@ -3,11 +3,10 @@ import * as k8s from "@pulumi/kubernetes";
 export function create(clusterProvider: k8s.Provider) {
 
     const kongIngress = new k8s.helm.v3.Chart(
-        "kong-ingress", 
+        "kong-ingress",
         {
             chart: "kong",
-            version: "1.24.4",
-            fetchOpts:{
+            fetchOpts: {
                 repo: "https://charts.konghq.com",
             },
             values: {
