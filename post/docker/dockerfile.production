@@ -1,0 +1,20 @@
+# use a node alpine a builder
+FROM node:14-alpine as builder
+WORKDIR /app
+COPY ./package.json ./package-lock.json ./
+RUN npm i
+COPY . .
+# npm prune removes dev dependencies from node_modules
+RUN npm run build && npm prune --production
+
+# use another node alpine without uncecessary bloat of npm cache & useless packages
+FROM node:14-alpine
+
+WORKDIR /app
+
+# copy dist in root, and residual node_modules
+COPY --from=builder /app/dist ./
+COPY --from=builder /app/node_modules ./node_modules
+
+# start main
+CMD node main
