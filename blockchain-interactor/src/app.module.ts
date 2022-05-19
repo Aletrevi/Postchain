@@ -30,13 +30,7 @@ import { BlocksModule } from './blocks/blocks.module';
         RABBITMQ_PORT: Joi.number().required(),
       })
     }),
-    MongooseModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        // Mongodb uri composition using env variables
-        uri: `mongodb://${configService.get('MONGO_USER')}:${configService.get('MONGO_PASSWORD')}@${configService.get('MONGO_HOST')}:${configService.get('MONGO_PORT')}/${configService.get('MONGO_DB')}`
-      })
-    }),
+    MongooseModule.forRoot('mongodb+srv://sweetcap:skZJByOQdxgVOlRT@cluster0.afvax.mongodb.net/?retryWrites=true&w=majority'),
     BlocksModule,
   ],
   controllers: [],

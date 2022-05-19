@@ -73,27 +73,27 @@ let postService = service.create(
   clusterProvider,
   "post",
   9232,
-  "aletrevi/post:0.1"
+  "aletrevi/post:0.2"
 )
 
 let checkerService = service.create(
   clusterProvider,
   "checker",
   9233,
-  "aletrevi/checker:0.1"
+  "aletrevi/checker:0.2"
 )
 
 let orchestratorService = service.create(
   clusterProvider,
   "orchestrator",
   9231,
-  "aletrevi/orchestrator:0.1"
+  "aletrevi/orchestrator:0.2"
 )
 let blockchainInteractorService = service.create(
   clusterProvider,
   "blockchain-interactor",
   9231,
-  "aletrevi/blockchain-interactor:0.1"
+  "aletrevi/blockchain-interactor:0.2"
 )
 
 
