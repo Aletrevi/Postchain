@@ -11,6 +11,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }), 
+    
     MongooseModule.forRoot(
       'mongodb+srv://sweetcap:skZJByOQdxgVOlRT@cluster0.afvax.mongodb.net/?retryWrites=true&w=majority',
     ),

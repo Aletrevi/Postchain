@@ -4,7 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CheckerModule } from './checker/checker.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import * as Joi from '@hapi/joi';
+
 
 @Module({
   imports: [
