@@ -3,7 +3,6 @@ import { BlocksService } from './blocks.service';
 import { BlocksController } from './blocks.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Block, BlockSchema } from './schemas/block.schema';
-import Joi from '@hapi/joi';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 

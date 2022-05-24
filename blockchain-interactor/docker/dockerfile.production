@@ -15,6 +15,6 @@ WORKDIR /app
 # copy dist in root, and residual node_modules
 COPY --from=builder /app/dist ./
 COPY --from=builder /app/node_modules ./node_modules
-
+COPY ./src/blocks/contracts/postchain.json /contracts/postchain.json
 # start main
-CMD node main
+CMD node main  

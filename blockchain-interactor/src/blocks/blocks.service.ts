@@ -8,6 +8,8 @@ import SHA3 from 'sha3';
 import { PaginationQueryDto } from 'src/dto/paginationQuery.dto';
 import Web3 from 'web3';
 import { Block } from './schemas/block.schema';
+import * as CONTRACT from "./contracts/postchain.json"
+
 
 /**
  * Block service
@@ -17,8 +19,7 @@ import { Block } from './schemas/block.schema';
  */
 @Injectable()
 export class BlocksService {
-  // TODO: Investigate why json module are not automatically included in dist
-  private readonly myContract = require('/contracts/postchain.json');
+  private readonly myContract = require('../blocks/contracts/postchain.json');
   
   private readonly wallet_privateKey: string;
   private readonly wallet_address: string;
@@ -46,10 +47,10 @@ export class BlocksService {
     // Web3 instantiation
     const provider = new Web3.providers.HttpProvider(this.infuraUrl);
     this.web3 = new Web3(provider);
-
+    console.log(this.wallet_privateKey);
     // Web3 private key configuration
     this.web3.eth.accounts.wallet.add(this.wallet_privateKey);
-
+    
     // Get network id and instantiate contract object
     from(this.web3.eth.net.getId()).pipe(
       tap((networkId) => {
