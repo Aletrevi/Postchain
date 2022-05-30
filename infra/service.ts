@@ -1,13 +1,13 @@
 import * as k8s from "@pulumi/kubernetes";
 import { Output } from "@pulumi/pulumi";
 
-export function create(clusterProvider: k8s.Provider, name: string, port: number, image: string) {
+export function create(clusterProvider: k8s.Provider, name: string, port: number, image: string, env_variables: any[]) {
     const appLabels = {
         appClass: name,
     };
 
     const namespace = createNamespace(clusterProvider, name);
-    const deployment = createDeployment(clusterProvider, name, namespace, appLabels, port, image)
+    const deployment = createDeployment(clusterProvider, name, namespace, appLabels, port, image, env_variables)
     const service = createService(clusterProvider, name, appLabels, namespace)
     const ingress = createIngress(clusterProvider, name)
 }
@@ -24,7 +24,7 @@ function createNamespace(clusterProvider: k8s.Provider, name: string) {
 }
 
 
-function createDeployment(clusterProvider: k8s.Provider, name: string, namespaceName: Output<string>, appLabels: { appClass: string; }, port: number, image: string) {
+function createDeployment(clusterProvider: k8s.Provider, name: string, namespaceName: Output<string>, appLabels: { appClass: string; }, port: number, image: string, env_variables: any[]) {
     const deployment = new k8s.apps.v1.Deployment(
         name,
         {
@@ -50,6 +50,7 @@ function createDeployment(clusterProvider: k8s.Provider, name: string, namespace
                                         containerPort: port,
                                     }
                                 ],
+                                env: env_variables
                             }
                         ],
                     }

@@ -47,7 +47,7 @@ import { ClientProxyFactory, Transport } from '@nestjs/microservices';
         const rabbitmq_password = configService.get('RABBITMQ_PASSWORD');
         const rabbitmq_host = configService.get('RABBITMQ_HOST');
         const rabbitmq_port = configService.get('RABBITMQ_PORT');
-        const rabbitmq_queue_name = configService.get('RABBITMQ_BC_INTERACTIR_TRIGGERS_QUEUE_NAME');
+        const rabbitmq_queue_name = configService.get('RABBITMQ_BC_INTERACTOR_TRIGGERS_QUEUE_NAME');
 
         return ClientProxyFactory.create({
           transport: Transport.RMQ,
