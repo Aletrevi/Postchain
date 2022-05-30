@@ -12,9 +12,5 @@ class User(HttpUser):
         posts.list_posts(self)
 
     @task
-    def get_post_by_id(self):
-        posts.get_post_by_id(self)
-
-    # @task
-    # def add_post(self):
-    #     postsssss.add_post(self)
+    def add_post(self):
+        posts.add_post(self)
