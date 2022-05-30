@@ -74,7 +74,7 @@ function createService(clusterProvider: k8s.Provider, name: string, appLabels: {
                 namespace: namespaceName,
             },
             spec: {
-                type: "CusterIP",
+                type: "ClusterIP",
                 ports: [{
                     port: 80,
                     targetPort: "http",
