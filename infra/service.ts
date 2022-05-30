@@ -7,9 +7,9 @@ export function create(clusterProvider: k8s.Provider, name: string, port: number
     };
 
     const namespace = createNamespace(clusterProvider, name);
-    const deployment = createDeployment(clusterProvider, name, namespace, appLabels, port, image, env_variables)
-    const service = createService(clusterProvider, name, appLabels, namespace)
-    const ingress = createIngress(clusterProvider, name)
+    const deployment = createDeployment(clusterProvider, name, appLabels, port, image, env_variables)
+    const service = createService(clusterProvider, name, appLabels)
+    const ingress = createIngress(clusterProvider, name, service)
 }
 
 function createNamespace(clusterProvider: k8s.Provider, name: string) {
@@ -24,12 +24,11 @@ function createNamespace(clusterProvider: k8s.Provider, name: string) {
 }
 
 
-function createDeployment(clusterProvider: k8s.Provider, name: string, namespaceName: Output<string>, appLabels: { appClass: string; }, port: number, image: string, env_variables: any[]) {
+function createDeployment(clusterProvider: k8s.Provider, name: string, appLabels: { appClass: string; }, port: number, image: string, env_variables: any[]) {
     const deployment = new k8s.apps.v1.Deployment(
         name,
         {
             metadata: {
-                namespace: namespaceName,
                 labels: appLabels,
             },
             spec: {
@@ -65,20 +64,20 @@ function createDeployment(clusterProvider: k8s.Provider, name: string, namespace
     return deployment.metadata.apply(m => m.name);
 }
 
-function createService(clusterProvider: k8s.Provider, name: string, appLabels: { appClass: string; }, namespaceName: Output<string>) {
+function createService(clusterProvider: k8s.Provider, name: string, appLabels: { appClass: string }) {
     const service = new k8s.core.v1.Service(
         name,
         {
             metadata: {
                 labels: appLabels,
-                namespace: namespaceName,
             },
             spec: {
-                type: "ClusterIP",
+                type: "NodePort",
                 ports: [{
                     port: 80,
                     targetPort: "http",
-                }]
+                }],
+                selector: appLabels,
             }
         },
         {
@@ -89,7 +88,7 @@ function createService(clusterProvider: k8s.Provider, name: string, appLabels: {
     return service.metadata.apply(m => m.name);
 }
 
-function createIngress(clusterProvider: k8s.Provider, name: string) {
+function createIngress(clusterProvider: k8s.Provider, name: string, serviceName: any) {
     const ingress = new k8s.networking.v1.Ingress(
         name,
         {
@@ -106,7 +105,7 @@ function createIngress(clusterProvider: k8s.Provider, name: string) {
                             pathType: "Prefix",
                             backend: {
                                 service: {
-                                    name: name,
+                                    name: serviceName,
                                     port: {
                                         number: 80,
                                     },

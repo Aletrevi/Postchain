@@ -67,7 +67,7 @@ const clusterProvider = new k8s.Provider(name, {
 });
 
 let ingressIntance = ingressController.create(clusterProvider)
-let prometheusOperatorInstance = prometheusOperator.create(clusterProvider)
+// let prometheusOperatorInstance = prometheusOperator.create(clusterProvider)
 
 let postService = service.create(
   clusterProvider,
@@ -142,8 +142,8 @@ let orchestratorService = service.create(
   "aletrevi/orchestrator:0.5",
   [
     {
-      name:"PORT",
-      value:"3001"
+      name: "PORT",
+      value: "3001"
     },
     {
       name: "RABBITMQ_USER",
@@ -198,8 +198,8 @@ let blockchainInteractorService = service.create(
   "aletrevi/blockchain-interactor:0.5",
   [
     {
-      name:"PORT",
-      value:"3001"
+      name: "PORT",
+      value: "3001"
     },
     {
       name: "RABBITMQ_USER",
