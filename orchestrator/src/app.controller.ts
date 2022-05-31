@@ -21,7 +21,7 @@ export class AppController {
     let bc = this.bc_interactor_triggers_client.emit<any>('create_block', body);
     return combineLatest([checker, bc]);
   }
-  
+
   @EventPattern('post_verified')
   postVerifiedEvent(@Payload() body: any): Observable<any> {
     return this.post_service_triggers_client.emit<any>('post_verified', body); // TODO: modificare 
@@ -31,24 +31,27 @@ export class AppController {
   postRejectedEvent(@Payload() body: any): Observable<any> {
     let post = this.post_service_triggers_client.emit<any>('post_rejeceted', body); // TODO: modificare 
     let bc = this.bc_interactor_triggers_client.emit<any>('delete_block', body);
-    return combineLatest ([post,bc])
+    return combineLatest([post, bc])
   }
 
   @EventPattern('block_published')
-  blockPublishedEvent(@Payload() body: any): Observable<any>{
+  blockPublishedEvent(@Payload() body: any): Observable<any> {
     return this.bc_interactor_triggers_client.emit<any>('block_published', body); // TODO: modificare 
   }
 
   @EventPattern('block_not_published')
-  blockNotPublishedEvent(@Payload() body: any): Observable<any>{
+  blockNotPublishedEvent(@Payload() body: any): Observable<any> {
     return this.bc_interactor_triggers_client.emit<any>('block_not_published', body); // TODO: modificare 
   }
   @EventPattern('post_reformed')
   postReformedEvent(@Payload() body: any) {
     let var2 = this.checker_service_triggers_client.emit<any>('post_reformed', body);
     let var3 = this.bc_interactor_triggers_client.emit<any>('create_block', body)
-    return combineLatest ([var2,var3])
-   }
+    return combineLatest([var2, var3])
+  }
 
-  
+  health(): boolean {
+    return true;
+  }
+
 }

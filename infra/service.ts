@@ -70,9 +70,12 @@ function createService(clusterProvider: k8s.Provider, name: string, appLabels: {
         {
             metadata: {
                 labels: appLabels,
+                annotations: {
+                    "cloud.google.com/neg": "{\"ingress\": true}"
+                }
             },
             spec: {
-                type: "NodePort",
+                type: "ClusterIP",
                 ports: [{
                     port: 80,
                     targetPort: "http",
