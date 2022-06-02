@@ -47,7 +47,7 @@ export class BlocksService {
     // Web3 instantiation
     const provider = new Web3.providers.HttpProvider(this.infuraUrl);
     this.web3 = new Web3(provider);
-    console.log(this.wallet_privateKey);
+  
     // Web3 private key configuration
     this.web3.eth.accounts.wallet.add(this.wallet_privateKey);
     
