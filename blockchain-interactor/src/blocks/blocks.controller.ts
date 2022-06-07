@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, Logger, Param, Query } from '@nestjs/common';
 import { ClientProxy, EventPattern, Payload } from '@nestjs/microservices';
 import { ApiParam, ApiQuery, ApiResponse } from '@nestjs/swagger';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { PaginationQueryDto } from 'src/dto/paginationQuery.dto';
 import { BlocksService} from './blocks.service';
 import { FindOneParams } from './params/find-one.params';
@@ -85,13 +85,25 @@ export class BlocksController {
     return this.blocksService.findTransaction(hash);
   }
 
-  @EventPattern('createBlock')
+  @EventPattern('create_block')
   createEvent(@Payload() blockBody: any): Observable<Block> {
-    return this.eventsClient.emit<Block>('post_created', this.blocksService.create(blockBody));
+    console.log(blockBody)
+    
+    return this.blocksService.create(blockBody).pipe(
+      // TODO: Manage failures
+      switchMap(() => {
+        return this.eventsClient.emit<Block>('post_created', blockBody._id)
+      }),
+    );
   }
   //Remove block: return the id of the post and a boolean for isPublished
-  @EventPattern('removeBlock')
+  @EventPattern('remove_block')
   removeEvent(@Payload() blockBody: any): Observable<Block> {
-    return this.eventsClient.emit<Block>('post_removed', this.blocksService.remove(blockBody));
+    console.log(blockBody)
+    return this.blocksService.remove(blockBody).pipe(
+      switchMap(() => {
+        return this.eventsClient.emit<Block>('post_removed', blockBody._id);
+      }),
+    );
   }
 }

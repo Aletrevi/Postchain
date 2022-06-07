@@ -58,6 +58,12 @@ export class CheckerController {
 
   @EventPattern('verify_post')
   postControlEvent(@Payload() body: any){
-    this.eventsClient.emit("VALIDATION_COMPLETE", this.checkerService.manageValidation(body)) 
+   
+    if (this.checkerService.manageValidation(body)) {
+      return this.eventsClient.emit("post_verified", body._id) 
+    } else {
+      return this.eventsClient.emit("post_rejected", body._id) 
+    }
+    
   }
 }

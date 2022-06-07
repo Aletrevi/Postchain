@@ -27,6 +27,38 @@ async function bootstrap() {
       },
     },
   });
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.RMQ,
+    options: {
+      urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
+      queue: configService.get('RABBITMQ_POST_SERVICE_EVENTS_QUEUE_NAME'),
+      queueOptions: {
+        durable: true
+      },
+    },
+  });
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.RMQ,
+    options: {
+      urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
+      queue: configService.get('RABBITMQ_CHECKER_SERVICE_QUEUE_NAME'),
+      queueOptions: {
+        durable: true
+      },
+    },
+  });
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.RMQ,
+    options: {
+      urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
+      queue: configService.get('RABBITMQ_BC_INTERACTOR_QUEUE_NAME'),
+      queueOptions: {
+        durable: true
+      },
+    },
+  });
+  
+
 
   // Setup OPENAPI 
   const config = new DocumentBuilder()

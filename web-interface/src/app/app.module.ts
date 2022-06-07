@@ -17,6 +17,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { MyPostsResolver } from './posts/resolvers/my-posts.resolver';
 import { FilterPostsResolver } from './posts/resolvers/filter-posts.resolver';
 import { NewPostComponent } from './new-post/new-post.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +39,10 @@ import { NewPostComponent } from './new-post/new-post.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    HttpClientModule
+    HttpClientModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
   ],
   providers: [
     PostService,

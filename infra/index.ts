@@ -67,33 +67,185 @@ const clusterProvider = new k8s.Provider(name, {
 });
 
 let ingressIntance = ingressController.create(clusterProvider)
-let prometheusOperatorInstance = prometheusOperator.create(clusterProvider)
+// let prometheusOperatorInstance = prometheusOperator.create(clusterProvider)
 
 let postService = service.create(
   clusterProvider,
   "post",
   9232,
-  "aletrevi/post:0.4"
+  "aletrevi/post:0.6",
+  [
+    {
+      name: "RABBITMQ_USER",
+      value: "admin"
+    },
+    {
+      name: "RABBITMQ_PASSWORD",
+      value: "admin"
+    },
+    {
+      name: "RABBITMQ_HOST",
+      value: "message-broker"
+    },
+    {
+      name: "RABBITMQ_PORT",
+      value: "5672"
+    },
+    {
+      name: "RABBITMQ_POST_SERVICE_EVENTS_QUEUE_NAME",
+      value: "post_service.events"
+    },
+    {
+      name: "RABBITMQ_POST_SERVICE_TRIGGERS_QUEUE_NAME",
+      value: "post_service.triggers"
+    },
+  ]
 )
 
 let checkerService = service.create(
   clusterProvider,
   "checker",
-  9233,
-  "aletrevi/checker:0.3"
+  9234,
+  "aletrevi/checker:0.6",
+  [
+    {
+      name: "RABBITMQ_USER",
+      value: "admin"
+    },
+    {
+      name: "RABBITMQ_PASSWORD",
+      value: "admin"
+    },
+    {
+      name: "RABBITMQ_HOST",
+      value: "message-broker"
+    },
+    {
+      name: "RABBITMQ_PORT",
+      value: "5672"
+    },
+    {
+      name: "RABBITMQ_CHECKER_SERVICE_EVENTS_QUEUE_NAME",
+      value: "checker_service.events"
+    },
+    {
+      name: "RABBITMQ_CHECKER_SERVICE_TRIGGERS_QUEUE_NAME",
+      value: "checker_service.triggers"
+    },
+  ]
 )
 
 let orchestratorService = service.create(
   clusterProvider,
   "orchestrator",
-  9231,
-  "aletrevi/orchestrator:0.3"
+  3001,
+  "aletrevi/orchestrator:0.6",
+  [
+    {
+      name: "PORT",
+      value: "3001"
+    },
+    {
+      name: "RABBITMQ_USER",
+      value: "admin"
+    },
+    {
+      name: "RABBITMQ_PASSWORD",
+      value: "admin"
+    },
+    {
+      name: "RABBITMQ_HOST",
+      value: "message-broker"
+    },
+    {
+      name: "RABBITMQ_PORT",
+      value: "5672"
+    },
+    {
+      name: "RABBITMQ_POST_SERVICE_EVENTS_QUEUE_NAME",
+      value: "post_service.events"
+    },
+    {
+      name: "RABBITMQ_POST_SERVICE_TRIGGERS_QUEUE_NAME",
+      value: "post_service.triggers"
+    },
+    {
+      name: "RABBITMQ_CHECKER_SERVICE_EVENTS_QUEUE_NAME",
+      value: "checker_service.events"
+    },
+    {
+      name: "RABBITMQ_CHECKER_SERVICE_TRIGGERS_QUEUE_NAME",
+      value: "checker_service.triggers"
+    },
+    {
+      name: "RABBITMQ_BC_INTERACTOR_SERVICE_EVENTS_QUEUE_NAME",
+      value: "bc_interactor.events"
+    },
+    {
+      name: "RABBITMQ_BC_INTERACTOR_SERVICE_TRIGGERS_QUEUE_NAME",
+      value: "bc_interactor.triggers"
+    },
+    {
+      name: "RABBITMQ_QUEUE_NAME",
+      value: "orchestrator_service.triggers"
+    },
+  ]
 )
 let blockchainInteractorService = service.create(
   clusterProvider,
   "blockchain-interactor",
-  9231,
-  "aletrevi/blockchain-interactor:0.3"
+  3001,
+  "aletrevi/blockchain-interactor:0.6",
+  [
+    {
+      name: "PORT",
+      value: "3001"
+    },
+    {
+      name: "RABBITMQ_USER",
+      value: "admin"
+    },
+    {
+      name: "RABBITMQ_PASSWORD",
+      value: "admin"
+    },
+    {
+      name: "RABBITMQ_HOST",
+      value: "message-broker"
+    },
+    {
+      name: "RABBITMQ_PORT",
+      value: "5672"
+    },
+    {
+      name: "RABBITMQ_BLOCKCHAIN_INTERACTOR_SERVICE_EVENTS_QUEUE_NAME",
+      value: "bc_interactor.events"
+    },
+    {
+      name: "RABBITMQ_BLOCKCHAIN_INTERACTOR_SERVICE_TRIGGERS_QUEUE_NAME",
+      value: "bc_interactor.triggers"
+    },
+    {
+      name: "WALLET_PRIVATE_KEY",
+      value: "75bcf91780b2504638144a4f6f9337a56738bba07cbb2f256d461a870ed495bc"
+    },
+    {
+      name: "WALLET_ADDRESS",
+      value: "0xD0a9a942a4e8680F94bED892fcb277eB67B3B337"
+    },
+    {
+      name: "INFURA_TOKEN",
+      value: "87047500d3194aa397371f52c1178504"
+    },
+    {
+      name: "INFURA_URL",
+      value: "https://rinkeby.infura.io/v3"
+    },
+    {
+      name: "ETHERSCAN_URL",
+      value: "https://rinkeby.etherscan.io/tx"
+    }
+  ]
 )
 
 

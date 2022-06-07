@@ -81,43 +81,43 @@ services:
       - "27017:27017"
     networks:
       - blockchain-interactor_network
- 
-  # # checker microservice
-  # checker:
-  #   build:
-  #     dockerfile: docker/dockerfile.develop
-  #     context: ../checker
-  #   volumes:
-  #     - ../checker:/app
-  #   ports:
-  #     - "9234:9234"
-  #     - "3004:3004"
-  #   env_file:
-  #     - ../checker/.env.development 
-  #   networks:
-  #     - main_network
-  #     - checker_network
-  #   depends_on: 
-  #     - message-broker
-  #     - checker-data-persistence
+
+  # checker microservice
+  checker:
+    build:
+      dockerfile: docker/dockerfile.develop
+      context: ../checker
+    volumes:
+      - ../checker:/app
+    ports:
+      - "9234:9234"
+      - "3004:3004"
+    env_file:
+      - ../checker/.env.development 
+    networks:
+      - main_network
+      - checker_network
+    depends_on: 
+      - message-broker
+      - checker-data-persistence
  
 
-  # checker-data-persistence:
-  #   image: bitnami/mongodb:4.2
-  #   environment:
-  #     - MONGODB_ADVERTISED_HOSTNAME=checker-data-persistence
-  #     - MONGODB_REPLICA_SET_MODE=primary
-  #     - MONGODB_ROOT_PASSWORD=password
-  #     - MONGODB_REPLICA_SET_KEY=replicasetkey123
-  #     - MONGODB_USERNAME=user
-  #     - MONGODB_PASSWORD=password
-  #     - MONGODB_DATABASE=postchain
-  #   volumes:
-  #     - checker-mongo-volume:/bitnami
-  #   ports:
-  #     - "27019:27017"
-  #   networks:
-  #     - checker_network
+  checker-data-persistence:
+    image: bitnami/mongodb:4.2
+    environment:
+      - MONGODB_ADVERTISED_HOSTNAME=checker-data-persistence
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ROOT_PASSWORD=password
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+      - MONGODB_USERNAME=user
+      - MONGODB_PASSWORD=password
+      - MONGODB_DATABASE=postchain
+    volumes:
+      - checker-mongo-volume:/bitnami
+    ports:
+      - "27019:27017"
+    networks:
+      - checker_network
 
 
   # Saga orchestrator microservice
@@ -184,8 +184,8 @@ networks:
  
   post_network:
     name: post_network
- # checker_network:
-  #  name: checker_network
+  checker_network:
+    name: checker_network
 
 volumes:
   blockchain-interactor-mongo-volume:
@@ -196,6 +196,7 @@ volumes:
 
   post-mongo-volume:
     driver: local
- # checker-mongo-volume:
-  #  driver: local
+
+  checker-mongo-volume:
+    driver: local
 

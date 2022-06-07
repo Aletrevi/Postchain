@@ -1,3 +1,28 @@
-<p>new-post works!</p>
+<h1>Create a new post</h1>
+<div class="formatter">
+    <form #myForm="ngForm">
+        <mat-form-field>
+            <mat-label>
+                Author
+            </mat-label>
+            <input matInput placeholder="Author" [(ngModel)]="author" name="author" >
+        </mat-form-field> 
+        <mat-form-field>
+            <mat-label>
+                Title
+            </mat-label>
+            <input matInput placeholder="Title" [(ngModel)]="title" name="title" >
+        </mat-form-field> 
+        <mat-form-field>
+            <mat-label>
+                Body
+            </mat-label>
+            <input  matInput placeholder="Body" [(ngModel)]="body" name="body" >
+        </mat-form-field> 
+        <div class="bottom-actions">
+           
+            <button mat-button (click)="onSubmitPost()">Crea post</button>
+        </div>
+    </form>
+</div>
 
-<button mat-button (click)="onCreatePost()">Crea Post</button> 
