@@ -30,7 +30,7 @@ import { AppService } from './app.service';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });
@@ -53,7 +53,7 @@ import { AppService } from './app.service';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });
@@ -76,7 +76,7 @@ import { AppService } from './app.service';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });
@@ -99,7 +99,7 @@ import { AppService } from './app.service';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });
@@ -122,7 +122,7 @@ import { AppService } from './app.service';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });
@@ -145,7 +145,7 @@ import { AppService } from './app.service';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });

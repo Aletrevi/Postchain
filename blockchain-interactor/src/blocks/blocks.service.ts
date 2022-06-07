@@ -132,7 +132,8 @@ export class BlocksService {
       catchError((err, caught) => {
         Logger.log(err);
         throw 'Trying to create a duplicated block';
-      })
+      }),
+
     );
   }
 

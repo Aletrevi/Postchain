@@ -43,12 +43,7 @@ export class AppController {
   blockNotPublishedEvent(@Payload() body: any): Observable<any> {
     return this.bc_interactor_triggers_client.emit<any>('block_not_published', body); // TODO: modificare 
   }
-  @EventPattern('post_reformed')
-  postReformedEvent(@Payload() body: any) {
-    let var2 = this.checker_service_triggers_client.emit<any>('post_reformed', body);
-    let var3 = this.bc_interactor_triggers_client.emit<any>('create_block', body)
-    return combineLatest([var2, var3])
-  }
+ 
 
   health(): boolean {
     return true;

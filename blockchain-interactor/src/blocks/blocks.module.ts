@@ -32,7 +32,7 @@ import { ClientProxyFactory, Transport } from '@nestjs/microservices';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });
@@ -55,7 +55,7 @@ import { ClientProxyFactory, Transport } from '@nestjs/microservices';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });

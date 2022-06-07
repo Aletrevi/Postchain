@@ -29,7 +29,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
           queue: rabbitmq_queue_name,
           queueOptions: {
-            durable: false
+            durable: true
           },
         },
       });
@@ -52,7 +52,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
           queue: rabbitmq_queue_name,
           queueOptions: {
-            durable: false
+            durable: true
           },
         },
       });
