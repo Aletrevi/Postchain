@@ -95,22 +95,26 @@ export class PostsController {
   
   @EventPattern('post_verified')
   postaApprovedEvent(@Payload() body: any): Promise<Posts> {
-    console.log(body);
+    
+   
     return this.postService.manageApproval(body);
   } 
   
   @EventPattern('post_rejected')
   postRejectedEvent(@Payload() body: any){
+    
     return this.postService.manageRejection(body); 
   }
 
   @EventPattern('block_published')
   blockPublishedEvent(@Payload() body: any){
+  
     return this.postService.managePublication(body);
   }
 
   @EventPattern('block_not_published')
   blockNotPublishedEvent(@Payload() body: any){
+
     return this.postService.managePublicationFailed( body); 
   }
 

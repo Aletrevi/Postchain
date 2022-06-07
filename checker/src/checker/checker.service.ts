@@ -38,7 +38,6 @@ export class CheckerService {
   }
 
   async manageValidation(post:Posts): Promise<boolean> {
-    console.log('manage validation called')
       let answer = await this.checkPost(post);
       if (answer)
         return true

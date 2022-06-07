@@ -87,22 +87,22 @@ export class BlocksController {
 
   @EventPattern('create_block')
   createEvent(@Payload() blockBody: any): Observable<Block> {
-    console.log(blockBody)
-    
+
+
     return this.blocksService.create(blockBody).pipe(
       // TODO: Manage failures
       switchMap(() => {
-        return this.eventsClient.emit<Block>('post_created', blockBody._id)
+        return this.eventsClient.emit<Block>('block_published', blockBody._id)
       }),
     );
   }
   //Remove block: return the id of the post and a boolean for isPublished
   @EventPattern('remove_block')
   removeEvent(@Payload() blockBody: any): Observable<Block> {
-    console.log(blockBody)
+
     return this.blocksService.remove(blockBody).pipe(
       switchMap(() => {
-        return this.eventsClient.emit<Block>('post_removed', blockBody._id);
+        return this.eventsClient.emit<Block>('block_not_published', blockBody._id);
       }),
     );
   }

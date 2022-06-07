@@ -18,6 +18,7 @@ export class PostsService {
     
     return from(this.postModel.create(createPostDto)).pipe(
       switchMap((post: Posts) => {
+     
         return this.eventsClient.emit<Posts>('post_created', post);
       })
     ).toPromise();
@@ -84,6 +85,7 @@ export class PostsService {
     //TODO: set isPublished = true
   }
   async managePublicationFailed(id:string): Promise<Posts> {
+    console.log('manage publication failed called')
     return this.postModel.findByIdAndUpdate(id,{status:'rejected', isPublished: false}).exec()
     //TODO: set isPublished = false, set  status as rejected
   }
