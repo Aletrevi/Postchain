@@ -57,10 +57,12 @@ export class CheckerController {
   // }
 
   @EventPattern('verify_post')
-  postControlEvent(@Payload() body: any){
- 
+  async postControlEvent(@Payload() body: any)  {
     
-    if (this.checkerService.manageValidation(body)) {
+    let res = await this.checkerService.manageValidation(body);
+    console.log ('res = ' + res)
+    
+    if (res) {
      
       return this.eventsClient.emit("post_verified", body._id) 
     } else {

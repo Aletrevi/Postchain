@@ -4,7 +4,7 @@
     border: 1px solid rgb(104, 92, 92);
     border-radius: 3px;
     min-height: auto;
-    width: 60%;
+    width: 50%;
     display: flex !important;
     flex-direction: column;
     align-items: flex-start;
@@ -12,7 +12,7 @@
     
     mat-form-field{
         margin-left:10%;
-        min-width: 70%;
+        min-width: 90%;
         max-width: auto;
     }
     .bottom-actions{

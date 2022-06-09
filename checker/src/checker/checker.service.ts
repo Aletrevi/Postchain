@@ -38,11 +38,13 @@ export class CheckerService {
   }
 
   async manageValidation(post:Posts): Promise<boolean> {
-      let answer = await this.checkPost(post);
-      if (answer)
+      let answer = this.checkPost(post);
+      let answer1 = (await answer).toPromise();
+      let res =await answer1;
+      console.log(res)
+      if(res)
         return true
-      else
-        return false
+      else return false
   }
 
 }
