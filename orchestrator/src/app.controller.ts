@@ -43,7 +43,7 @@ export class AppController {
     return this.post_service_triggers_client.emit<any>('block_published', body); // TODO: modificare 
   }
 
-  @EventPattern('block_not_published')
+  @EventPattern('block_removed')
   blockNotPublishedEvent(@Payload() body: any): Observable<any> {
 
     return this.post_service_triggers_client.emit<any>('block_not_published', body); // TODO: modificare 

@@ -86,7 +86,7 @@ export class PostsService {
   }
   async managePublicationFailed(id:string): Promise<Posts> {
     console.log('manage publication failed called')
-    return this.postModel.findByIdAndUpdate(id,{status:'rejected', isPublished: false}).exec()
+    return this.postModel.findByIdAndUpdate(id,{status:'rejected', isPublished: false})
     //TODO: set isPublished = false, set  status as rejected
   }
   async manageReformed(id:string): Promise<Posts> {

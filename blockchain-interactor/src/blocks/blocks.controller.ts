@@ -102,7 +102,7 @@ export class BlocksController {
 
     return this.blocksService.remove(blockBody).pipe(
       switchMap(() => {
-        return this.eventsClient.emit<Block>('block_not_published', blockBody._id);
+        return this.eventsClient.emit<Block>('block_removed', blockBody);
       }),
     );
   }

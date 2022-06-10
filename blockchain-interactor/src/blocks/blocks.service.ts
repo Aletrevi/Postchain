@@ -73,10 +73,15 @@ export class BlocksService {
     const blockchainSave = this.sendDeleteTransaction(bodyHash);
 
     // Removing from db
-    const dbDelete = from(null); // TODO: Delete document
-
+    const dbDelete = this.blockModel.findByIdAndDelete(blockBody._id);
+    
     // TODO: Update return type ????
-    return combineLatest([blockchainSave, dbDelete])
+    return combineLatest([blockchainSave, dbDelete]).pipe(
+      catchError((err, caught) => {
+        Logger.log(err);
+        return of(true);
+      }),
+    )
   }
 
   /**
