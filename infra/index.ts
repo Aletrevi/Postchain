@@ -73,7 +73,7 @@ let postService = service.create(
   clusterProvider,
   "post",
   9232,
-  "aletrevi/post:0.6",
+  "aletrevi/post:0.7",
   [
     {
       name: "RABBITMQ_USER",
@@ -106,7 +106,7 @@ let checkerService = service.create(
   clusterProvider,
   "checker",
   9234,
-  "aletrevi/checker:0.6",
+  "aletrevi/checker:0.7",
   [
     {
       name: "RABBITMQ_USER",
@@ -139,7 +139,7 @@ let orchestratorService = service.create(
   clusterProvider,
   "orchestrator",
   3001,
-  "aletrevi/orchestrator:0.6",
+  "aletrevi/orchestrator:0.7",
   [
     {
       name: "PORT",
@@ -195,7 +195,7 @@ let blockchainInteractorService = service.create(
   clusterProvider,
   "blockchain-interactor",
   3001,
-  "aletrevi/blockchain-interactor:0.6",
+  "aletrevi/blockchain-interactor:0.7",
   [
     {
       name: "PORT",
