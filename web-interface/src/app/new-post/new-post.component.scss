@@ -1,44 +1,31 @@
-.post-wrapper{
-    border:1px solid darkgray;
-    border-radius: 15px;
-    margin-left: 15vw;
-    margin-top: 8vh;
-    width: 50vw;
-    height: fit-content;
-    background-color: rgb(231, 228, 228);
-    color: rgb(27, 26, 26);
-    display: flex;
+
+.formatter{
+    margin-left: 10rem;
+    border: 1px solid rgb(104, 92, 92);
+    border-radius: 3px;
+    min-height: auto;
+    width: 40%;
+    display: flex !important;
     flex-direction: column;
-    padding: 1rem;
-    input{
-        margin-top: 0.5rem;
+    align-items: flex-start;
+    padding: 2rem;
+    
+    mat-form-field{
+        margin-left:10%;
+        min-width: 90%;
+        max-width: auto;
     }
-    .post-title{
-       border-bottom:1px solid darkgray;
-     
-       span{font-size: 14pt;}
-    }
-    .new-content{
-        padding-top:0.5rem ;
+    .bottom-actions{
         display: flex;
-        flex-direction: column;
-        span{
-            font-size: 13pt;
+        flex-direction: row-reverse;
+        width: 100%;
+        button{
+            margin-top: 2%;
+            border: 1px solid rgb(104, 92, 92);
         }
     }
-  
-    .author{padding-left:1rem;}
-    .content{
-      padding:1.5rem;
-      margin-bottom: 1px solid rgb(27, 26, 26);
-    }
-    .actions{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        padding: 1rem;
-        i{
-            margin-right: 4%;
-        }
-    }
+}
+h1{ margin-left: 2%;
+    margin-top: 2%;
+    margin-bottom: 5%
 }

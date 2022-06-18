@@ -1,23 +1,14 @@
-import * as Joi from '@hapi/joi';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
-import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 
 @Module({
   imports: [
-    // TODO: configure ConfigModule:
-    //    - concept variables separation 
-    //    - improve validation
-    MongooseModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        // Mongodb uri composition using env variables
-        uri: `mongodb://${configService.get('MONGO_USER')}:${configService.get('MONGO_PASSWORD')}@${configService.get('MONGO_HOST')}:${configService.get('MONGO_PORT')}/${configService.get('MONGO_DB')}`
-      })
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
   ],
   controllers: [AppController],
@@ -39,7 +30,7 @@ import { AppService } from './app.service';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });
@@ -62,7 +53,7 @@ import { AppService } from './app.service';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });
@@ -85,7 +76,7 @@ import { AppService } from './app.service';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });
@@ -108,7 +99,7 @@ import { AppService } from './app.service';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });
@@ -131,7 +122,7 @@ import { AppService } from './app.service';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });
@@ -146,7 +137,7 @@ import { AppService } from './app.service';
         const rabbitmq_password = configService.get('RABBITMQ_PASSWORD');
         const rabbitmq_host = configService.get('RABBITMQ_HOST');
         const rabbitmq_port = configService.get('RABBITMQ_PORT');
-        const rabbitmq_queue_name = configService.get('RABBITMQ_BC_INTERACTIR_TRIGGERS_QUEUE_NAME');
+        const rabbitmq_queue_name = configService.get('RABBITMQ_BC_INTERACTOR_TRIGGERS_QUEUE_NAME');
 
         return ClientProxyFactory.create({
           transport: Transport.RMQ,
@@ -154,7 +145,7 @@ import { AppService } from './app.service';
             urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
             queue: rabbitmq_queue_name,
             queueOptions: {
-              durable: false
+              durable: true
             },
           },
         });

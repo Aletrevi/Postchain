@@ -1,7 +1,22 @@
-<p>posts works!
+<h1>Dashboard</h1>
+<table>
+<tr>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Body</th>
+    <th>Check status</th>
+    <th>Check result</th>
+    <th>Publication</th>
+    <th>Status</th>
+</tr>
     <tr *ngFor="let post of posts; let i = index">
         <td>{{post.title}}</td>
         <td>{{post.author}}</td>
         <td>{{post.body}}</td>
+        <td>{{post.isChecked}}</td>
+        <td>{{post.isPublished}}</td>
+        <td>{{post.checkPassed}}</td>
+        <td>{{post.status}}</td>
     </tr>
-</p>
+
+</table>

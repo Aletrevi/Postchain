@@ -14,13 +14,14 @@ async function bootstrap() {
   const rabbitmq_password = configService.get('RABBITMQ_PASSWORD');
   const rabbitmq_host = configService.get('RABBITMQ_HOST');
   const rabbitmq_port = configService.get('RABBITMQ_PORT');
-  const rabbitmq_queue_name = configService.get('RABBITMQ_QUEUE_NAME');
+  const rabbitmq_queue_name = configService.get('RABBITMQ_BC_INTERACTOR_TRIGGERS_QUEUE_NAME');
 
   // Connecting to message broker microservice
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
       urls: [`amqp://${rabbitmq_user}:${rabbitmq_password}@${rabbitmq_host}:${rabbitmq_port}`],
+      queue: rabbitmq_queue_name,
       queueOptions: {
         durable: true
       },

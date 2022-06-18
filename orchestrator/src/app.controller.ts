@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Inject } from '@nestjs/common';
 import { ClientProxy, EventPattern, Payload } from '@nestjs/microservices';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { AppService } from './app.service';
 
 @Controller()
@@ -17,33 +17,41 @@ export class AppController {
 
   @EventPattern('post_created')
   postCreatedEvent(@Payload() body: any): Observable<any> {
+    
     let checker = this.checker_service_triggers_client.emit<any>('verify_post', body);
     let bc = this.bc_interactor_triggers_client.emit<any>('create_block', body);
     return combineLatest([checker, bc]);
   }
-  
+
   @EventPattern('post_verified')
   postVerifiedEvent(@Payload() body: any): Observable<any> {
+    
     return this.post_service_triggers_client.emit<any>('post_verified', body); // TODO: modificare 
   }
 
   @EventPattern('post_rejected')
   postRejectedEvent(@Payload() body: any): Observable<any> {
-    return this.post_service_triggers_client.emit<any>('post_rejeceted', body); // TODO: modificare 
+  
+    let post = this.post_service_triggers_client.emit<any>('post_rejected', body); // TODO: modificare 
+    let bc = this.bc_interactor_triggers_client.emit<any>('remove_block', body);
+    return combineLatest([post, bc])
   }
 
   @EventPattern('block_published')
-  blockPublishedEvent(@Payload() body: any): Observable<any>{
-    return this.bc_interactor_triggers_client.emit<any>('block_published', body); // TODO: modificare 
+  blockPublishedEvent(@Payload() body: any): Observable<any> {
+    
+    return this.post_service_triggers_client.emit<any>('block_published', body); // TODO: modificare 
   }
 
-  @EventPattern('block_not_published')
-  blockNotPublishedEvent(@Payload() body: any): Observable<any>{
-    return this.bc_interactor_triggers_client.emit<any>('block_not_published', body); // TODO: modificare 
+  @EventPattern('block_removed')
+  blockNotPublishedEvent(@Payload() body: any): Observable<any> {
+
+    return this.post_service_triggers_client.emit<any>('block_not_published', body); // TODO: modificare 
   }
-  @EventPattern('post_reformed')
-  postReformedEvent(@Payload() body: any): Observable<any>{
-    return this.post_service_triggers_client.emit<any>('post_reformed', body); // TODO: modificare 
+ 
+
+  health(): boolean {
+    return true;
   }
-  
+
 }

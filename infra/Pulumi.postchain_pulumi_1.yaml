@@ -1,0 +1,4 @@
+encryptionsalt: v1:K8R9nGBMaF0=:v1:W8rSl1BQLQoG7NnA:pa7B8gqLhlaMVa8OAPdUcY+BjwhiiQ==
+config:
+  gcp:project: "postchain"
+  gcp:zone: "europe-west1-b"

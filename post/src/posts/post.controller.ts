@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Post,
   Put,
@@ -13,12 +14,17 @@ import { Posts } from './schemas/post.schema';
 
 import { ApiBody, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { EventPattern, Payload } from '@nestjs/microservices';
+import { ClientProxy, EventPattern, Payload } from '@nestjs/microservices';
 import { combineLatest, Observable } from 'rxjs';
 
 @Controller('posts')
 export class PostsController {
-  constructor(private readonly postService: PostsService) {}
+  constructor(
+    private readonly postService: PostsService,
+    @Inject('RABBIT_TRIGGERS') private triggerSClient: ClientProxy,
+    @Inject('RABBIT_EVENTS') private eventsClient: ClientProxy,
+    
+  ) {}
 
   @Post()
   @ApiBody({
@@ -31,7 +37,8 @@ export class PostsController {
     type: Posts,
   })
   async create(@Body() createPostDto: CreatePostDto) {
-    await this.postService.create(createPostDto);
+    let body = await this.postService.create(createPostDto);
+   
   }
 
   @Get()
@@ -85,36 +92,30 @@ export class PostsController {
   async delete(@Param('id') id: string) {
     return this.postService.delete(id);
   }
+  
+  @EventPattern('post_verified')
+  postaApprovedEvent(@Payload() body: any): Promise<Posts> {
+    
+   
+    return this.postService.manageApproval(body);
+  } 
+  
+  @EventPattern('post_rejected')
+  postRejectedEvent(@Payload() body: any){
+    
+    return this.postService.manageRejection(body); 
+  }
 
-  // @EventPattern('post_created')
-  // postCreatedEvent(@Payload() body: any): Observable<any> {
-  //   let checker = this.checker_service_triggers_client.emit<any>('verify_post', body);
-  //   let bc = this.bc_interactor_triggers_client.emit<any>('create_block', body);
-  //   return combineLatest({ checker: checker, bc: bc});
-  // }
+  @EventPattern('block_published')
+  blockPublishedEvent(@Payload() body: any){
+  
+    return this.postService.managePublication(body);
+  }
 
-  // @EventPattern('post_verified')
-  // postVerifiedEvent(@Payload() body: any): Observable<any> {
-  //   return this.post_service_triggers_client.emit<any>('post_verified', body); // TODO: modificare 
-  // }
+  @EventPattern('block_not_published')
+  blockNotPublishedEvent(@Payload() body: any){
 
-  // @EventPattern('post_rejected')
-  // postRejectedEvent(@Payload() body: any): Observable<any> {
-  //   return this.post_service_triggers_client.emit<any>('post_rejeceted', body); // TODO: modificare 
-  // }
-
-  // @EventPattern('block_published')
-  // blockPublishedEvent(@Payload() body: any): Observable<any>{
-  //   return this.bc_interactor_triggers_client.emit<any>('block_published', body); // TODO: modificare 
-  // }
-
-  // @EventPattern('block_not_published')
-  // blockNotPublishedEvent(@Payload() body: any): Observable<any>{
-  //   return this.bc_interactor_triggers_client.emit<any>('block_not_published', body); // TODO: modificare 
-  // }
-  // @EventPattern('post_reformed')
-  // postReformedEvent(@Payload() body: any): Observable<any>{
-  //   return this.post_service_triggers_client.emit<any>('post_reformed', body); // TODO: modificare 
-  // }
+    return this.postService.managePublicationFailed( body); 
+  }
 
 }

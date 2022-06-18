@@ -43,6 +43,13 @@ export class Posts extends Document {
     default: false,
   })
   isPublished: boolean;
+
+  @ApiProperty()
+  @Prop({
+    required: false,
+    default: false,
+  })
+  checkPassed: boolean
 }
 
 export const PostsSchema = SchemaFactory.createForClass(Posts);

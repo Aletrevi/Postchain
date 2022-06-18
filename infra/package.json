@@ -1,0 +1,11 @@
+{
+  "name": "postchain",
+  "devDependencies": {
+    "@types/node": "^14"
+  },
+  "dependencies": {
+    "@pulumi/gcp": "^6.20.0",
+    "@pulumi/kubernetes": "^3.19.1",
+    "@pulumi/pulumi": "^3.30.0"
+  }
+}

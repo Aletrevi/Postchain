@@ -9,7 +9,9 @@ export class PostService extends HttpService<Post>{
 
   constructor(protected readonly http: HttpClient
     ) {
+      
       super(http, 'post/posts');
+      
     }
     
     public getAllPosts() {
