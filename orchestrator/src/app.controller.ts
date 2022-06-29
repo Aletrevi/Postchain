@@ -50,6 +50,7 @@ export class AppController {
   }
  
 
+  @Get()
   health(): boolean {
     return true;
   }

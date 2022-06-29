@@ -49,7 +49,13 @@ function createDeployment(clusterProvider: k8s.Provider, name: string, appLabels
                                         containerPort: port,
                                     }
                                 ],
-                                env: env_variables
+                                env: env_variables,
+                                readinessProbe: {
+                                    httpGet: {
+                                        port: port,
+                                        path: "/"
+                                    }
+                                }
                             }
                         ],
                     }

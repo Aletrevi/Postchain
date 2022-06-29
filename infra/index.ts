@@ -73,7 +73,7 @@ let postService = service.create(
   clusterProvider,
   "post",
   9232,
-  "aletrevi/post:0.7",
+  "aletrevi/post:0.8",
   [
     {
       name: "RABBITMQ_USER",
