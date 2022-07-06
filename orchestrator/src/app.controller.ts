@@ -26,13 +26,13 @@ export class AppController {
   @EventPattern('post_verified')
   postVerifiedEvent(@Payload() body: any): Observable<any> {
     
-    return this.post_service_triggers_client.emit<any>('post_verified', body); // TODO: modificare 
+    return this.post_service_triggers_client.emit<any>('post_verified', body);  
   }
 
   @EventPattern('post_rejected')
   postRejectedEvent(@Payload() body: any): Observable<any> {
   
-    let post = this.post_service_triggers_client.emit<any>('post_rejected', body); // TODO: modificare 
+    let post = this.post_service_triggers_client.emit<any>('post_rejected', body);
     let bc = this.bc_interactor_triggers_client.emit<any>('remove_block', body);
     return combineLatest([post, bc])
   }
@@ -40,16 +40,15 @@ export class AppController {
   @EventPattern('block_published')
   blockPublishedEvent(@Payload() body: any): Observable<any> {
     
-    return this.post_service_triggers_client.emit<any>('block_published', body); // TODO: modificare 
+    return this.post_service_triggers_client.emit<any>('block_published', body); 
   }
 
   @EventPattern('block_removed')
   blockNotPublishedEvent(@Payload() body: any): Observable<any> {
 
-    return this.post_service_triggers_client.emit<any>('block_not_published', body); // TODO: modificare 
+    return this.post_service_triggers_client.emit<any>('block_not_published', body);
   }
  
-
   @Get()
   health(): boolean {
     return true;

@@ -63,7 +63,7 @@ export class BlocksService {
   }
 
   remove(blockBody: any): Observable<any> {
-    
+    console.log ('remove blockchain interactor called')
     Logger.debug(`Removing block with body ${JSON.stringify(blockBody)}`);
 
     // Generating sha3 hash of body
