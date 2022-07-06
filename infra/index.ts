@@ -106,7 +106,7 @@ let checkerService = service.create(
   clusterProvider,
   "checker",
   9234,
-  "aletrevi/checker:0.8",
+  "aletrevi/checker:1.0",
   [
     {
       name: "RABBITMQ_USER",
@@ -195,7 +195,7 @@ let blockchainInteractorService = service.create(
   clusterProvider,
   "blockchain-interactor",
   3001,
-  "aletrevi/blockchain-interactor:0.8",
+  "aletrevi/blockchain-interactor:1.0",
   [
     {
       name: "PORT",
