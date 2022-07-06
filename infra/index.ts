@@ -195,7 +195,7 @@ let blockchainInteractorService = service.create(
   clusterProvider,
   "blockchain-interactor",
   3001,
-  "aletrevi/blockchain-interactor:1.0",
+  "aletrevi/blockchain-interactor:1.1",
   [
     {
       name: "PORT",

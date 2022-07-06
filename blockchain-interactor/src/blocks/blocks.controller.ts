@@ -1,7 +1,8 @@
 import { Controller, Get, Inject, Logger, Param, Query } from '@nestjs/common';
 import { ClientProxy, EventPattern, Payload } from '@nestjs/microservices';
 import { ApiParam, ApiQuery, ApiResponse } from '@nestjs/swagger';
-import { Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { PaginationQueryDto } from 'src/dto/paginationQuery.dto';
 import { BlocksService} from './blocks.service';
 import { FindOneParams } from './params/find-one.params';
