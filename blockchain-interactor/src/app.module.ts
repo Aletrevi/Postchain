@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { BlocksModule } from './blocks/blocks.module';
 
 @Module({
@@ -15,7 +16,12 @@ import { BlocksModule } from './blocks/blocks.module';
     MongooseModule.forRoot('mongodb+srv://sweetcap:skZJByOQdxgVOlRT@cluster0.afvax.mongodb.net/?retryWrites=true&w=majority'),
     BlocksModule,
   ],
-  controllers: [],
+  controllers: [
+    AppController,
+  ],
+  providers: [
+    AppService,
+  ]
 })
 export class AppModule {}
 
