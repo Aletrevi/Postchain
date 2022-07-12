@@ -37,7 +37,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(9232);
+  await app.listen(9232,'0.0.0.0');
     // Starting all microservices
     app.startAllMicroservices();
 }

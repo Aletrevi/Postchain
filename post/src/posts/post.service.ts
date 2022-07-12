@@ -15,7 +15,7 @@ export class PostsService {
   ) {}
 
   async create(createPostDto: CreatePostDto): Promise<Posts> {
-    console.log('create post called')
+
     return from(this.postModel.create(createPostDto)).pipe(
       switchMap((post: Posts) => {
      
@@ -47,51 +47,52 @@ export class PostsService {
   }
 
   async manageApproval(id:string): Promise<Posts> {
-    console.log('manageApproval called')
+    
       let post = await this.postModel.findById(id).exec()
       let updateQuery = {}
       if(post.isPublished)
         { 
           updateQuery = {status:'approved' ,isChecked:true, checkPassed: true}
-          console.log('updateQuery =' + updateQuery.toString())
+        
         }
         else {
           updateQuery = {isChecked:true, checkPassed: true}
-          console.log('updateQuery =' + updateQuery.toString())
+          
         }
       
       return this.postModel.findByIdAndUpdate(id,updateQuery ).exec()
   }
   async manageRejection(id:string): Promise<Posts> {
-    console.log('manageRejection called')
+  
           return this.postModel.findByIdAndUpdate(id,{status:'rejected', isChecked: true, checkPassed: false}).exec()
 
     //TODO: undo blockchain publication, set status as rejected, set isPublished= false, set isChecked = true
   }
   async managePublication(id:string): Promise<Posts> {
-    console.error('managePublication called')
+    
     let post = await this.postModel.findById(id).exec()
     let updateQuery = {}
     if(post.isChecked && post.checkPassed)
       { 
         updateQuery = {status:'approved' ,isPublished:true}
-        console.log('updateQuery =')
-        console.log(updateQuery)
+        
+       
       }
       else {
         updateQuery = {isPublished: true}
-        console.log('updateQuery =')
-        console.log(updateQuery)
+     
+        
       }
     
     return this.postModel.findByIdAndUpdate(id,updateQuery).exec()
 
-    //TODO: set isPublished = true
+
   }
   async managePublicationFailed(id:string): Promise<Posts> {
-    console.log('managePublicationFailed called')
+   
     return this.postModel.findByIdAndUpdate(id,{status:'rejected', isPublished: false})
-    //TODO: set isPublished = false, set  status as rejected
+  
+    
   }
 
  

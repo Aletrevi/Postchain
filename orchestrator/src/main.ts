@@ -82,6 +82,6 @@ async function bootstrap() {
 
   // Starting http 
   const app_port = configService.get('PORT');
-  await app.listen(app_port);
+  await app.listen(app_port,'0.0.0.0');
 }
 bootstrap();

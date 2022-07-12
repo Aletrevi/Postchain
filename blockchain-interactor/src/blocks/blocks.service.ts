@@ -54,6 +54,7 @@ export class BlocksService {
     // Get network id and instantiate contract object
     from(this.web3.eth.net.getId()).pipe(
       tap((networkId) => {
+      
         this.contract = new this.web3.eth.Contract(
           this.myContract.abi,
           this.myContract.networks[networkId].address,
@@ -63,7 +64,7 @@ export class BlocksService {
   }
 
   remove(blockBody: any): Observable<any> {
-    console.log ('remove blockchain interactor called')
+    
     Logger.debug(`Removing block with body ${JSON.stringify(blockBody)}`);
 
     // Generating sha3 hash of body
@@ -288,6 +289,8 @@ export class BlocksService {
     const gasObs = from(transactionMethod.estimateGas({ from: this.wallet_address }));
     const gasPriceObs = from(this.web3.eth.getGasPrice());
     const nonceObs = from(this.web3.eth.getTransactionCount(this.wallet_address));
+
+    
 
     // Build transaction object with all
     return combineLatest([gasObs, gasPriceObs, nonceObs]).pipe(

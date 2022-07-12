@@ -43,6 +43,7 @@ function createDeployment(clusterProvider: k8s.Provider, name: string, appLabels
                             {
                                 name: name,
                                 image: image,
+                                imagePullPolicy: 'Always',
                                 ports: [
                                     {
                                         name: "http",
@@ -53,8 +54,20 @@ function createDeployment(clusterProvider: k8s.Provider, name: string, appLabels
                                 readinessProbe: {
                                     httpGet: {
                                         port: port,
-                                        path: "/"
-                                    }
+                                        path: "/",
+                                    },
+                                    timeoutSeconds: 5,
+                                    initialDelaySeconds: 30,
+                                    failureThreshold: 5,
+                                },
+                                livenessProbe: {
+                                    httpGet: {
+                                        port: port,
+                                        path: "/",
+                                    },
+                                    timeoutSeconds: 5,
+                                    initialDelaySeconds: 30,
+                                    failureThreshold: 5,
                                 }
                             }
                         ],

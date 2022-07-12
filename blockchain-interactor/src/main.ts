@@ -1,4 +1,3 @@
-import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
@@ -38,19 +37,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
 
-
-  // Validate request's data with DTO
-  // TODO: validate id with custom validator https://stackoverflow.com/questions/49709429/decorator-to-return-a-404-in-a-nest-controller
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    transform: true
-  }));
-
   // Starting all microservices
   app.startAllMicroservices();
 
   // Starting http 
   const app_port = configService.get('PORT');
-  await app.listen(app_port);
+  await app.listen(app_port, "0.0.0.0");
 }
 bootstrap();

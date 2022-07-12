@@ -16,7 +16,7 @@ export class CheckerService {
   ) {}
 
   async checkPost(createCheckerDto: CreateCheckerDto) {
-    console.log('checkPost called')
+
     let titleCheck = this.httpService.get(
           'https://www.purgomalum.com/service/containsprofanity?text=' +
           createCheckerDto.title,
@@ -39,11 +39,11 @@ export class CheckerService {
   }
 
   async manageValidation(post:Posts): Promise<boolean> {
-    console.log('manageValidation called')
+    
       let answer = this.checkPost(post);
       let answer1 = (await answer).toPromise();
       let res =await answer1;
-      console.log(res)
+  
       if(res)
         return true
       else return false

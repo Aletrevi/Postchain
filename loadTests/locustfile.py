@@ -15,6 +15,6 @@ class User(HttpUser):
     def add_post(self):
         posts.add_post(self)
 
-    @task
-    def check_post(self):
-        check.check_post(self)
+    #@task
+    #def check_post(self):
+        #check.check_post(self)

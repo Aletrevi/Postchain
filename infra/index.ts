@@ -3,6 +3,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as gcp from "@pulumi/gcp";
 import * as ingressController from "./ingressController";
 import * as service from "./service";
+import * as messageBrokerService from './message-broker';
 import * as prometheusOperator from "./prometheusOperator";
 
 const name = "helloworld";
@@ -73,7 +74,7 @@ let postService = service.create(
   clusterProvider,
   "post",
   9232,
-  "aletrevi/post:0.8",
+  "aletrevi/post:1.1",
   [
     {
       name: "RABBITMQ_USER",
@@ -85,7 +86,7 @@ let postService = service.create(
     },
     {
       name: "RABBITMQ_HOST",
-      value: "message-broker"
+      value: "message-broker-rabbitmq"
     },
     {
       name: "RABBITMQ_PORT",
@@ -106,7 +107,7 @@ let checkerService = service.create(
   clusterProvider,
   "checker",
   9234,
-  "aletrevi/checker:1.0",
+  "aletrevi/checker:1.1",
   [
     {
       name: "RABBITMQ_USER",
@@ -118,7 +119,7 @@ let checkerService = service.create(
     },
     {
       name: "RABBITMQ_HOST",
-      value: "message-broker"
+      value: "message-broker-rabbitmq"
     },
     {
       name: "RABBITMQ_PORT",
@@ -139,7 +140,7 @@ let orchestratorService = service.create(
   clusterProvider,
   "orchestrator",
   3001,
-  "aletrevi/orchestrator:0.8",
+  "aletrevi/orchestrator:1.1",
   [
     {
       name: "PORT",
@@ -155,7 +156,7 @@ let orchestratorService = service.create(
     },
     {
       name: "RABBITMQ_HOST",
-      value: "message-broker"
+      value: "message-broker-rabbitmq"
     },
     {
       name: "RABBITMQ_PORT",
@@ -191,6 +192,9 @@ let orchestratorService = service.create(
     },
   ]
 )
+let rabbitMQ = messageBrokerService.create(
+  clusterProvider,
+)
 let blockchainInteractorService = service.create(
   clusterProvider,
   "blockchain-interactor",
@@ -211,7 +215,7 @@ let blockchainInteractorService = service.create(
     },
     {
       name: "RABBITMQ_HOST",
-      value: "message-broker"
+      value: "message-broker-rabbitmq"
     },
     {
       name: "RABBITMQ_PORT",

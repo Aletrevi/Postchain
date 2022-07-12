@@ -60,7 +60,7 @@ export class CheckerController {
   async postControlEvent(@Payload() body: any)  {
     
     let res = await this.checkerService.manageValidation(body);
-    console.log ('res = ' + res)
+    
     
     if (res) {
      
