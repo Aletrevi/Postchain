@@ -17,9 +17,11 @@ export class AppController {
 
   @EventPattern('post_created')
   postCreatedEvent(@Payload() body: any): Observable<any> {
-    
-    let checker = this.checker_service_triggers_client.emit<any>('verify_post', body);
+  
     let bc = this.bc_interactor_triggers_client.emit<any>('create_block', body);
+   
+    let checker = this.checker_service_triggers_client.emit<any>('verify_post', body);
+   
     return combineLatest([checker, bc]);
   }
 
@@ -31,7 +33,7 @@ export class AppController {
 
   @EventPattern('post_rejected')
   postRejectedEvent(@Payload() body: any): Observable<any> {
-  
+
     let post = this.post_service_triggers_client.emit<any>('post_rejected', body);
     let bc = this.bc_interactor_triggers_client.emit<any>('remove_block', body);
     return combineLatest([post, bc])
@@ -39,13 +41,13 @@ export class AppController {
 
   @EventPattern('block_published')
   blockPublishedEvent(@Payload() body: any): Observable<any> {
-    
+     
     return this.post_service_triggers_client.emit<any>('block_published', body); 
   }
 
   @EventPattern('block_removed')
   blockNotPublishedEvent(@Payload() body: any): Observable<any> {
-
+   
     return this.post_service_triggers_client.emit<any>('block_not_published', body);
   }
  

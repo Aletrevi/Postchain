@@ -39,7 +39,11 @@ export class CheckerService {
   }
 
   async manageValidation(post:Posts): Promise<boolean> {
-    
+    var start = Date.now(),
+    now = start;
+    while (now - start < 20000) {
+      now = Date.now();
+    }
       let answer = this.checkPost(post);
       let answer1 = (await answer).toPromise();
       let res =await answer1;

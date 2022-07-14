@@ -66,7 +66,6 @@ export class PostsService {
   
           return this.postModel.findByIdAndUpdate(id,{status:'rejected', isChecked: true, checkPassed: false}).exec()
 
-    //TODO: undo blockchain publication, set status as rejected, set isPublished= false, set isChecked = true
   }
   async managePublication(id:string): Promise<Posts> {
     
@@ -83,15 +82,16 @@ export class PostsService {
      
         
       }
-    
+   
     return this.postModel.findByIdAndUpdate(id,updateQuery).exec()
 
 
   }
   async managePublicationFailed(id:string): Promise<Posts> {
-   
-    return this.postModel.findByIdAndUpdate(id,{status:'rejected', isPublished: false})
-  
+    let post = await this.postModel.findById(id).exec()
+       
+      return this.postModel.findByIdAndUpdate(id,{ isPublished: false})
+    
     
   }
 

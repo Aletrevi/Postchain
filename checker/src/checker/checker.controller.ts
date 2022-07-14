@@ -36,25 +36,6 @@ export class CheckerController {
     return this.checkerService.checkPost(createCheckerDto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.checkerService.findAll();
-  //  }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.checkerService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateCheckerDto: UpdateCheckerDto) {
-  //   return this.checkerService.update(+id, updateCheckerDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.checkerService.remove(+id);
-  // }
 
   @EventPattern('verify_post')
   async postControlEvent(@Payload() body: any)  {

@@ -50,6 +50,12 @@ export class Posts extends Document {
     default: false,
   })
   checkPassed: boolean
+  @ApiProperty()
+  @Prop({
+    required: false,
+    default: Date.now(),
+  })
+  createdAt: Date;
 }
 
 export const PostsSchema = SchemaFactory.createForClass(Posts);

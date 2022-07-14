@@ -97,7 +97,7 @@ export class BlocksService {
 
     // Generating sha3 hash of body
     const bodyHash = new SHA3().update(JSON.stringify(blockBody)).digest('hex');
-
+    
     // Check if a block with the same body already exists
     return this.isDuplicate(bodyHash).pipe(
       // map(() => {
@@ -137,7 +137,7 @@ export class BlocksService {
       }),
       catchError((err, caught) => {
         Logger.log(err);
-        throw 'Trying to create a duplicated block';
+        return of(false);
       }),
 
     );
@@ -223,7 +223,7 @@ export class BlocksService {
 
         // If block already exists throw an error
         if (block !== null) {
-          throw 'Duplicated block';
+          return false;
         }
 
         return true;
@@ -246,29 +246,6 @@ export class BlocksService {
       switchMap((transaction) => {
         return from(this.web3.eth.sendTransaction(transaction));
       }),
-
-
-      // // Transaction completed, calling view methods to check stored values: DEBUG ONLY
-      // switchMap((receipt) => {
-      //   Logger.log(`Receipt: ${receipt}`);
-      //   return from(this.contract.methods.stepsCounter().call())
-      // }),
-      // switchMap((stepsCounter) => {
-      //   Logger.log(`StepsCounter: ${stepsCounter}`);
-      //   return from(this.contract.methods.stepIdToStepInfo(1).call())
-      // }),
-      // switchMap((stepInfo) => {
-      //   Logger.log(`StepInfo 1: ${stepInfo}`);
-      //   return from(this.contract.methods.stepIdToStepInfo(2).call())
-      // }),
-      // switchMap((stepInfo) => {
-      //   Logger.log(`StepInfo 2: ${stepInfo}`);
-      //   return from(this.contract.methods.stepIdToStepInfo(3).call())
-      // }),
-      // switchMap((stepInfo) => {
-      //   Logger.log(`StepInfo 1: ${stepInfo}`);
-      //   return [];
-      // })
     );
   }
 

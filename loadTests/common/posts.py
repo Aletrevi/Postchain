@@ -13,10 +13,10 @@ def add_post(self):
 
 def generate_random_post_data(self):
     letters = string.ascii_letters
-    #author = ''.join(random.choice(letters) for i in range(10))
-    author = 'a'
-    #title = ''.join(random.choice(letters) for i in range(10))
-    title = 'a'
-    #body = ''.join(random.choice(letters) for i in range(10))
-    body = 'a'
+    author = ''.join(random.choice(letters) for i in range(10))
+   
+    title = ''.join(random.choice(letters) for i in range(10))
+   
+    body = ''.join(random.choice(letters) for i in range(10))
+   
     return {"author": author, "title": title, "body": body}

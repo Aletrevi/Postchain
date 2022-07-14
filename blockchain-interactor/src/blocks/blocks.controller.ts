@@ -100,10 +100,13 @@ export class BlocksController {
   //Remove block: return the id of the post and a boolean for isPublished
   @EventPattern('remove_block')
   removeEvent(@Payload() blockBody: any): Observable<Block> {
-
+    
     return this.blocksService.remove(blockBody).pipe(
-      switchMap(() => {
+      
+      switchMap(() => { 
+       
         return this.eventsClient.emit<Block>('block_removed', blockBody);
+       
       }),
     );
   }
