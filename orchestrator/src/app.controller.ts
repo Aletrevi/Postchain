@@ -17,11 +17,9 @@ export class AppController {
 
   @EventPattern('post_created')
   postCreatedEvent(@Payload() body: any): Observable<any> {
-  
+    
     let bc = this.bc_interactor_triggers_client.emit<any>('create_block', body);
-   
     let checker = this.checker_service_triggers_client.emit<any>('verify_post', body);
-   
     return combineLatest([checker, bc]);
   }
 

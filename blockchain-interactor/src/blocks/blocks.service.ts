@@ -221,7 +221,7 @@ export class BlocksService {
     return from(this.blockModel.findOne({ hash: hashOfJson}).exec()).pipe(
       map((block: Block | null) => {
 
-        // If block already exists throw an error
+     
         if (block !== null) {
           return false;
         }
